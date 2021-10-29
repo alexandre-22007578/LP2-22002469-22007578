@@ -1,2 +1,2 @@
-a22007578;Alexandre_Costa
-a22002469;Daniel_Granja
+a22007578;Alexandre Costa
+a22002469;Daniel Granja
