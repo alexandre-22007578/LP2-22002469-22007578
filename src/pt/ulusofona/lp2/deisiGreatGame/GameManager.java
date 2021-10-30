@@ -71,7 +71,7 @@ public class GameManager {
 
     public String getImagePng(int position) {
         if (position==tamanhoTabueiro){
-            return "glory.png";
+            return "podium.png.jpg";
         }
         return "";
 
