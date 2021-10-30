@@ -9,7 +9,7 @@ public class GameManager {
 
     int tamanhoTabueiro;
     int playerAtual = 0;
-    int numeroTotalDeTurnos = 0;
+    int numeroTotalDeTurnos = 1;
 
 
     ArrayList<Programmer> players = new ArrayList<>();

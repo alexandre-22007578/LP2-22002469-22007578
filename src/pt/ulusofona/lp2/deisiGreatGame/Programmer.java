@@ -1,6 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Programmer {
     int id;
@@ -43,11 +47,13 @@ public class Programmer {
     @Override
     public String toString()
     {
-        String[] linguagens = linguegnsFavoritas.split(";");
+        ArrayList<String> linguagensList= new ArrayList<>(Arrays.asList(linguegnsFavoritas.split(";")));
+
+        linguagensList.sort(String::compareTo);
         StringBuilder linguagensString = new StringBuilder();
-        linguagensString.append(linguagens[0]);
-        for (int i = 1; i < linguagens.length; i++){
-            linguagensString.append("; ").append(linguagens[i]);
+        linguagensString.append(linguagensList.get(0));
+        for (int i = 1; i < linguagensList.size(); i++){
+            linguagensString.append("; ").append(linguagensList.get(i));
         }
 
         return id + " | " + nome + " | " + posicao + " | " + linguagensString.toString() + " | " + estado;
