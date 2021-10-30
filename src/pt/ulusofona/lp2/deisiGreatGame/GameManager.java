@@ -12,12 +12,13 @@ public class GameManager {
     int numeroTotalDeTurnos = 1;
 
 
-    ArrayList<Programmer> players = new ArrayList<>();
+    ArrayList<Programmer> players;
 
     public GameManager() {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+        players = new ArrayList<>();
         int id;
         String nome;
         ProgrammerColor color;
