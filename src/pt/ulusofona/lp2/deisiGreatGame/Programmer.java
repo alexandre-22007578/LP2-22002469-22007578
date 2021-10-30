@@ -43,6 +43,13 @@ public class Programmer {
     @Override
     public String toString()
     {
-        return id + " | " + nome + " | " + posicao + " | " + linguegnsFavoritas + " | " + estado;
+        String[] linguagens = linguegnsFavoritas.split(";");
+        StringBuilder linguagensString = new StringBuilder();
+        linguagensString.append(linguagens[0]);
+        for (int i = 1; i < linguagens.length; i++){
+            linguagensString.append("; ").append(linguagens[i]);
+        }
+
+        return id + " | " + nome + " | " + posicao + " | " + linguagensString.toString() + " | " + estado;
     }
 }
