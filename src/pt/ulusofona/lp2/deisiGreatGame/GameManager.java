@@ -179,7 +179,7 @@ public class GameManager {
         resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao()+"");
 
 
-
+        System.out.println(players.get(0).posicao);
         return resultados;
     }
 
