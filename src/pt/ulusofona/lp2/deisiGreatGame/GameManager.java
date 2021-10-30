@@ -70,7 +70,11 @@ public class GameManager {
     }
 
     public String getImagePng(int position) {
+        if (position==tamanhoTabueiro){
+            return "glory.png";
+        }
         return "";
+
     }
 
     public ArrayList<Programmer> getProgrammers() {
@@ -152,7 +156,6 @@ public class GameManager {
 
         for (Programmer player : players) {
             if (player.getPosicao() == tamanhoTabueiro) {
-
                 return true;
             }
         }
@@ -178,8 +181,6 @@ public class GameManager {
         }
         resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao()+"");
 
-
-        System.out.println(players.get(0).posicao);
         return resultados;
     }
 

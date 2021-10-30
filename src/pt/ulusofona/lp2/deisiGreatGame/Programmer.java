@@ -48,7 +48,6 @@ public class Programmer {
     public String toString()
     {
         ArrayList<String> linguagensList= new ArrayList<>(Arrays.asList(linguegnsFavoritas.split(";")));
-
         linguagensList.sort(String::compareTo);
         StringBuilder linguagensString = new StringBuilder();
         linguagensString.append(linguagensList.get(0));
