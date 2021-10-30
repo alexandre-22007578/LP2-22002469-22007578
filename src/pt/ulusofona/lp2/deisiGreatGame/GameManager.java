@@ -151,6 +151,7 @@ public class GameManager {
 
         for (Programmer player : players) {
             if (player.getPosicao() == tamanhoTabueiro) {
+
                 return true;
             }
         }
@@ -159,19 +160,26 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-/*        int i;
-
+        int i;
         ArrayList<String> resultados = new ArrayList<>();
-        resultados.add("O GRANDE JOGO DO DEISI\n\nNR. DE TURNOS\n" + numeroTotalDeTurnos);
-        resultados.add("\n\nVENCEDOR\n"+players.get(playerAnterior).getName());
-        resultados.add("\n\nRESTANTES");
-        players.sort(Comparator.comparingInt((Programmer) -> Programmer.posicao));
+        resultados.add("O GRANDE JOGO DO DEISI");
+        resultados.add("");
+        resultados.add("NR. DE TURNOS");
+        resultados.add("" + numeroTotalDeTurnos);
+        resultados.add("");
+        resultados.add("VENCEDOR");
+        players.sort(Comparator.comparingInt((Programmer position) -> position.posicao).reversed());
+        resultados.add(players.get(0).getName());
+        resultados.add("");
+        resultados.add("RESTANTES");
         for ( i=1;i<players.size()-1;i++){
-            resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao()+"\n");
+            resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao());
         }
         resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao()+"");
-        return resultados;*/
-        return new ArrayList<>();
+
+
+
+        return resultados;
     }
 
     public JPanel getAuthorsPanel() {

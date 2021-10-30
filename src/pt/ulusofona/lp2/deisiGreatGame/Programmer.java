@@ -41,7 +41,8 @@ public class Programmer {
     }
 
     @Override
-    public String toString() {
-        return "";
+    public String toString()
+    {
+        return id + " | " + nome + " | " + posicao + " | " + linguegnsFavoritas + " | " + estado;
     }
 }
