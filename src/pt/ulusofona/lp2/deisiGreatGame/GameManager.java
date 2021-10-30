@@ -2,14 +2,69 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 
 public class GameManager {
+
+    int tamanhoTabueiro;
+    int playerAtual = 0;
+    int numeroTotalDeTurnos = 0;
+
+
+    ArrayList<Programmer> players = new ArrayList<>();
 
     public GameManager() {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+        int id;
+        String nome;
+        ProgrammerColor color;
+        String linguagensProgramacao;
+        HashSet<Integer> ids = new HashSet<>();
 
+
+        if (boardSize < playerInfo.length * 2 || playerInfo.length < 2 || playerInfo.length > 4) {
+            return false;
+        }
+        try {
+            for (String[] strings : playerInfo) {
+                id = Integer.parseInt(String.valueOf(strings[0]));
+                if (strings[1] == null || strings[1].equals("")) {
+                    return false;
+                }
+                nome = strings[1];
+                linguagensProgramacao = String.valueOf(strings[2]);
+                switch (strings[3]) {
+                    case "Purple":
+                        color = ProgrammerColor.PURPLE;
+                        break;
+                    case "Green":
+                        color = ProgrammerColor.GREEN;
+                        break;
+                    case "Brown":
+                        color = ProgrammerColor.BROWN;
+                        break;
+                    case "Blue":
+                        color = ProgrammerColor.BLUE;
+                        break;
+                    default:
+                        return false;
+                }
+                if (id < 1 || !(ids.add(id))) {
+                    return false;
+                }
+                players.add(new Programmer(id, nome, color, linguagensProgramacao));
+                this.tamanhoTabueiro = boardSize;
+
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
+
+        players.sort(Comparator.comparingInt((Programmer) -> Programmer.id));
         return true;
     }
 
@@ -18,33 +73,110 @@ public class GameManager {
     }
 
     public ArrayList<Programmer> getProgrammers() {
-        return new ArrayList<>();
+        return players;
     }
 
     public ArrayList<Programmer> getProgrammers(int position) {
-        return new ArrayList<>();
+
+        ArrayList<Programmer> programmersInPosition = new ArrayList<>();
+        if (position < 1 || position > tamanhoTabueiro - 1) {
+            return null;
+        }
+        for (Programmer player : players) {
+            if (player.getPosicao() == position) {
+                programmersInPosition.add(player);
+            }
+        }
+        if (programmersInPosition.size() == 0) {
+            return null;
+        }
+        return programmersInPosition;
     }
 
     public int getCurrentPlayerID() {
-        return 0;
+        return players.get(playerAtual).getId();
+
     }
 
-    public boolean moveCurrentPlayer(int nrPositions){
-        return true;
-    }
-    public boolean gameIsOver(){
+    public boolean moveCurrentPlayer(int nrPositions) {
+
+        if (nrPositions < 1 || nrPositions > 6) {
+            return false;
+        }
+        if (players.get(playerAtual).getPosicao() + nrPositions <= tamanhoTabueiro) {
+            players.get(playerAtual).aumentaPosicao(nrPositions);
+        } else {
+
+            players.get(playerAtual).diminuiPosicao(nrPositions, tamanhoTabueiro);
+
+        }
+
+
+        switch (playerAtual) {
+            case 0:
+
+                playerAtual++;
+                break;
+            case 1:
+                if (players.size() != 2) {
+                    playerAtual++;
+
+                } else {
+                    playerAtual = 0;
+
+                }
+
+                break;
+            case 2:
+                if (players.size() != 3) {
+                    playerAtual++;
+
+                } else {
+                    playerAtual = 0;
+
+                }
+                break;
+            case 3:
+                playerAtual = 0;
+
+                break;
+        }
+
+
+        numeroTotalDeTurnos++;
         return true;
     }
 
-    public ArrayList<String> getGameResults(){
+    public boolean gameIsOver() {
+
+        for (Programmer player : players) {
+            if (player.getPosicao() == tamanhoTabueiro) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public ArrayList<String> getGameResults() {
+/*        int i;
+
+        ArrayList<String> resultados = new ArrayList<>();
+        resultados.add("O GRANDE JOGO DO DEISI\n\nNR. DE TURNOS\n" + numeroTotalDeTurnos);
+        resultados.add("\n\nVENCEDOR\n"+players.get(playerAnterior).getName());
+        resultados.add("\n\nRESTANTES");
+        players.sort(Comparator.comparingInt((Programmer) -> Programmer.posicao));
+        for ( i=1;i<players.size()-1;i++){
+            resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao()+"\n");
+        }
+        resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao()+"");
+        return resultados;*/
         return new ArrayList<>();
     }
 
-    public JPanel getAuthorsPanel(){
+    public JPanel getAuthorsPanel() {
         return new JPanel();
     }
-
-
 
 
 }
