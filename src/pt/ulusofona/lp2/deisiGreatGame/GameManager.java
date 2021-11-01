@@ -8,7 +8,7 @@ import java.util.HashSet;
 public class GameManager {
 
     int tamanhoTabueiro;
-    int playerAtual = 0;
+    int playerAtual;
     int numeroTotalDeTurnos = 1;
 
 
@@ -24,7 +24,7 @@ public class GameManager {
         ProgrammerColor color;
         String linguagensProgramacao;
         HashSet<Integer> ids = new HashSet<>();
-
+        playerAtual = 0;
 
         if (boardSize < playerInfo.length * 2 || playerInfo.length < 2 || playerInfo.length > 4) {
             return false;
