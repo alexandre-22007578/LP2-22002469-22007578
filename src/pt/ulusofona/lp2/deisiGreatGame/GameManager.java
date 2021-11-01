@@ -9,7 +9,7 @@ public class GameManager {
 
     int tamanhoTabueiro;
     int playerAtual;
-    int numeroTotalDeTurnos = 1;
+    int numeroTotalDeTurnos;
 
 
     ArrayList<Programmer> players;
@@ -18,6 +18,7 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+        numeroTotalDeTurnos = 1;
         players = new ArrayList<>();
         int id;
         String nome;
