@@ -24,17 +24,22 @@ public class Programmer {
      public int getId(){
         return id;
     }
+
     public String getName(){
         return nome;
     }
+
     public int getPosicao(){
         return posicao;
     }
+
     void aumentaPosicao(int posicao){
 
         this.posicao+=posicao;
     }
+
     void diminuiPosicao(int posicao,int tamanhoTabuleiro){
+
         int posicaoSuposta = this.posicao + posicao;
         int numeroDeCasaQueAndaParaTras=posicaoSuposta-tamanhoTabuleiro;
         this.posicao=tamanhoTabuleiro-numeroDeCasaQueAndaParaTras;
@@ -55,6 +60,6 @@ public class Programmer {
             linguagensString.append("; ").append(linguagensList.get(i));
         }
 
-        return id + " | " + nome + " | " + posicao + " | " + linguagensString.toString() + " | " + estado;
+        return id + " | " + nome + " | " + posicao + " | " + linguagensString + " | " + estado;
     }
 }

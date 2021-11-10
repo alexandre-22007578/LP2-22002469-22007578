@@ -71,7 +71,10 @@ public class GameManager {
     }
 
     public String getImagePng(int position) {
-        if (position==tamanhoTabueiro){
+
+
+
+        if (position == tamanhoTabueiro) {
             return "podium.png.jpg";
         }
         return "";
@@ -177,16 +180,39 @@ public class GameManager {
         resultados.add(players.get(0).getName());
         resultados.add("");
         resultados.add("RESTANTES");
-        for ( i=1;i<players.size()-1;i++){
-            resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao());
+        for (i = 1; i < players.size() - 1; i++) {
+            resultados.add(players.get(i).getName() + " " + players.get(i).getPosicao());
         }
-        resultados.add(players.get(i).getName()+" "+players.get(i).getPosicao()+"");
+        resultados.add(players.get(i).getName() + " " + players.get(i).getPosicao() + "");
 
         return resultados;
     }
 
     public JPanel getAuthorsPanel() {
-        return new JPanel();
+
+        JPanel creditos = new JPanel();
+        creditos.setSize(300, 300);
+        ArrayList<JLabel> labels = new ArrayList<>();
+
+        labels.add(new JLabel("Parte 1 do projeto de LP2\n"));
+        labels.add(new JLabel("                                                                  "));
+        labels.add(new JLabel("Programadores do DEISI GREAT GAME:"));
+        labels.add(new JLabel("              Alexandre Costa            "));
+        labels.add(new JLabel("              Daniel Granja              "));
+        labels.add(new JLabel("                                                                  "));
+        labels.add(new JLabel("Professores da cadeira de LP2 2021 / 2022"));
+        labels.add(new JLabel("              Pedro Alves            "));
+        labels.add(new JLabel("              Lúcio Ferreira              "));
+        labels.add(new JLabel("              Bruno Ciperiano            "));
+
+
+
+        for (JLabel label : labels) {
+            creditos.add(label);
+        }
+
+
+        return creditos;
     }
 
 
