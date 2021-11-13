@@ -12,7 +12,7 @@ public class GameManager {
     int numeroTotalDeTurnos;
 
 
-    ArrayList<Programmer> players;
+    ArrayList<Programmer> players=new ArrayList<>();
 
     public GameManager() {
     }
