@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 public class GameManager {
 
@@ -68,6 +69,10 @@ public class GameManager {
 
         players.sort(Comparator.comparingInt((Programmer) -> Programmer.id));
         return true;
+    }
+
+    public List<Programmer> getProgrammers(boolean includeDefeated){
+        return players;
     }
 
     public String getImagePng(int position) {
