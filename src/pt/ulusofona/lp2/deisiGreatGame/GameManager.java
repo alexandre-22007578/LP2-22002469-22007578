@@ -18,7 +18,7 @@ public class GameManager {
     public GameManager() {
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+    private boolean createInitialBoard(String[][] playerInfo, int worldSize) {
         numeroTotalDeTurnos = 1;
         players = new ArrayList<>();
         int id;
@@ -28,7 +28,7 @@ public class GameManager {
         HashSet<Integer> ids = new HashSet<>();
         playerAtual = 0;
 
-        if (boardSize < playerInfo.length * 2 || playerInfo.length < 2 || playerInfo.length > 4) {
+        if (worldSize < playerInfo.length * 2 || playerInfo.length < 2 || playerInfo.length > 4) {
             return false;
         }
         try {
@@ -59,7 +59,7 @@ public class GameManager {
                     return false;
                 }
                 players.add(new Programmer(id, nome, color, linguagensProgramacao));
-                this.tamanhoTabueiro = boardSize;
+                this.tamanhoTabueiro = worldSize;
 
             }
 
@@ -71,8 +71,14 @@ public class GameManager {
         return true;
     }
 
-    public List<Programmer> getProgrammers(boolean includeDefeated){
-        return players;
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+
+
+        return createInitialBoard(playerInfo,worldSize);
+    }
+
+    public String getTitle(int position){
+        return "";
     }
 
     public String getImagePng(int position) {
@@ -86,11 +92,11 @@ public class GameManager {
 
     }
 
-    public ArrayList<Programmer> getProgrammers() {
+    public List<Programmer> getProgrammers(boolean includeDefeated){
         return players;
     }
 
-    public ArrayList<Programmer> getProgrammers(int position) {
+    public List<Programmer> getProgrammers(int position) {
 
         ArrayList<Programmer> programmersInPosition = new ArrayList<>();
         if (position < 1 || position > tamanhoTabueiro - 1) {
@@ -107,21 +113,25 @@ public class GameManager {
         return programmersInPosition;
     }
 
+    public String getProgrammersInfo(){
+        return "";
+    }
+
     public int getCurrentPlayerID() {
         return players.get(playerAtual).getId();
 
     }
 
-    public boolean moveCurrentPlayer(int nrPositions) {
+    public boolean moveCurrentPlayer(int nrSpaces) {
 
-        if (nrPositions < 1 || nrPositions > 6) {
+        if (nrSpaces < 1 || nrSpaces > 6) {
             return false;
         }
-        if (players.get(playerAtual).getPosicao() + nrPositions <= tamanhoTabueiro) {
-            players.get(playerAtual).aumentaPosicao(nrPositions);
+        if (players.get(playerAtual).getPosicao() + nrSpaces <= tamanhoTabueiro) {
+            players.get(playerAtual).aumentaPosicao(nrSpaces);
         } else {
 
-            players.get(playerAtual).diminuiPosicao(nrPositions, tamanhoTabueiro);
+            players.get(playerAtual).diminuiPosicao(nrSpaces, tamanhoTabueiro);
 
         }
 
@@ -161,6 +171,10 @@ public class GameManager {
         return true;
     }
 
+    public String reactToAbyssOrTool(){
+        return "";
+    }
+
     public boolean gameIsOver() {
 
         for (Programmer player : players) {
@@ -172,7 +186,7 @@ public class GameManager {
 
     }
 
-    public ArrayList<String> getGameResults() {
+    public List<String> getGameResults() {
         int i;
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
