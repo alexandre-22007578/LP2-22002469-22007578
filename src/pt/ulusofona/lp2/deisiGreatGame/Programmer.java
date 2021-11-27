@@ -21,8 +21,12 @@ public class Programmer {
         this.linguegnsFavoritas = linguegnsFavoritas;
     }
 
-     public int getId(){
+    public int getId(){
         return id;
+    }
+
+    public String getEstado() {
+        return estado;
     }
 
     public String getName(){

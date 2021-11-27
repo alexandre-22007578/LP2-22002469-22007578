@@ -1,10 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 public class GameManager {
 
@@ -13,14 +10,16 @@ public class GameManager {
     int numeroTotalDeTurnos;
 
 
-    ArrayList<Programmer> players=new ArrayList<>();
+    ArrayList<Programmer> players = new ArrayList<>();
+    HashMap<Integer, AbismoOrFerramenta> abismoEFerramentas = new HashMap<>();
+
 
     public GameManager() {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
         numeroTotalDeTurnos = 1;
-        players = new ArrayList<>();
+        players.clear();
         int id;
         String nome;
         ProgrammerColor color;
@@ -71,31 +70,95 @@ public class GameManager {
         return true;
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+
+        abismoEFerramentas.clear();
+        int abismoOrFerramenta;
+        int id;
+        int posicao;
+        try {
+
+            for (String[] abyssesAndTool : abyssesAndTools) {
+                abismoOrFerramenta = Integer.parseInt(String.valueOf(abyssesAndTool[0]));
+                posicao = Integer.parseInt(String.valueOf(abyssesAndTool[2]));
+                id = Integer.parseInt(String.valueOf(abyssesAndTool[1]));
+
+                if (posicao > worldSize || posicao < 0) { // check posicao
+                    return false;
+                }
+                if (abismoOrFerramenta != 0 && abismoOrFerramenta != 1) { // check abismo ou ferramenta
+                    return false;
+                }
+
+                if (abismoOrFerramenta == 0) {
+                    if (id < 0 || id > 9) { // check  id abismos
+                        return false;
+                    }
+                    abismoEFerramentas.put(posicao, new Abismo(id));
+                }
+                if (abismoOrFerramenta == 1) {
+                    if (id < 0 || id > 5) { // check  id ferramenta
+                        return false;
+                    }
+                    abismoEFerramentas.put(posicao, new Ferramenta(id));
+                }
+            }
+        } catch (Exception e) {
+            return false;
+        }
 
 
-
-
-        return createInitialBoard(playerInfo,worldSize);
+        return createInitialBoard(playerInfo, worldSize);
     }
 
-    public String getTitle(int position){
-        return "";
+    public String getTitle(int position) {
+        if (position < 0 || position > tamanhoTabueiro) {
+            return null;
+        }
+        if (abismoEFerramentas.containsKey(position)) {
+            return abismoEFerramentas.get(position).getTitulo();
+        }
+        return null;
     }
 
     public String getImagePng(int position) {
 
-
+        if (position < 0 || position > tamanhoTabueiro) {
+            return null;
+        }
 
         if (position == tamanhoTabueiro) {
             return "podium.png.jpg";
         }
-        return "";
+
+        if (abismoEFerramentas.containsKey(position)) {
+            return abismoEFerramentas.get(position).getTitulo() + ".png";
+        }
+
+
+        return null;
 
     }
 
-    public List<Programmer> getProgrammers(boolean includeDefeated){
-        return players;
+    public List<Programmer> getProgrammers(boolean includeDefeated) {
+
+        List<Programmer> jogadores;
+        ArrayList<Programmer> intermedio = new ArrayList<>();
+
+        if (includeDefeated) {
+            jogadores = players;
+        } else {
+
+            for (Programmer player : players) {
+                if (player.getEstado().equals("Em Jogo")) {
+
+                    intermedio.add(player);
+                }
+            }
+            jogadores=intermedio;
+        }
+        return jogadores;
+
     }
 
     public List<Programmer> getProgrammers(int position) {
@@ -115,7 +178,7 @@ public class GameManager {
         return programmersInPosition;
     }
 
-    public String getProgrammersInfo(){
+    public String getProgrammersInfo() {
         return "";
     }
 
@@ -173,7 +236,7 @@ public class GameManager {
         return true;
     }
 
-    public String reactToAbyssOrTool(){
+    public String reactToAbyssOrTool() {
         return "";
     }
 
@@ -225,7 +288,6 @@ public class GameManager {
         labels.add(new JLabel("              Pedro Alves            "));
         labels.add(new JLabel("              Lúcio Ferreira              "));
         labels.add(new JLabel("              Bruno Ciperiano            "));
-
 
 
         for (JLabel label : labels) {
