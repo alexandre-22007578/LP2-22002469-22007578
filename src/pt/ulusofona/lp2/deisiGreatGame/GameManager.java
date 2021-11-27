@@ -18,7 +18,7 @@ public class GameManager {
     public GameManager() {
     }
 
-    private boolean createInitialBoard(String[][] playerInfo, int worldSize) {
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
         numeroTotalDeTurnos = 1;
         players = new ArrayList<>();
         int id;
@@ -72,6 +72,8 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+
+
 
 
         return createInitialBoard(playerInfo,worldSize);
