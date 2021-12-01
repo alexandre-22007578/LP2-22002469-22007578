@@ -181,8 +181,13 @@ public class GameManager {
     public String getProgrammersInfo() {
         List<Programmer> players = getProgrammers(false);
         StringBuilder info = new StringBuilder();
-        for (Programmer player : players) {
-            info.append(player.getProggramesInfo()).append(" | ");
+
+        for (int i=0;i<players.size();i++){
+            if (i== players.size()-1){
+                info.append(players.get(i).getProggramesInfo());
+            }else {
+                info.append(players.get(i).getProggramesInfo()).append(" | ");
+            }
         }
 
         return info.toString();
@@ -217,85 +222,210 @@ public class GameManager {
         } else {
             playerAtual++;
         }
+
         numeroTotalDeTurnos++;
+    }
+
+    public boolean usoDeFerramenta(String abismo) {
+        boolean counter;
+        for (int i = 0; i < players.get(playerAtual).getFerramentas().size(); i++) {
+            counter = players.get(playerAtual).getFerramentas().get(i).daCounter(abismo);
+            if (counter) {
+                players.get(playerAtual).retiraFerramenta(players.get(playerAtual).getFerramentas().get(i));
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String reactToAbyss() {
+
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Erro de sintaxe")) {
+
+            if (usoDeFerramenta("Erro de sintaxe")) {
+
+                return "Caiu num Erro de Sintaxe, mas utilizou uma ferramenta para evitar";
+
+            }
+            players.get(playerAtual).mover(-1, tamanhoTabueiro);
+
+            return "Caiu num Erro de Sintaxe, irá recuar 1 casa";
+
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Erro de lógica")) {
+
+            if (usoDeFerramenta("Erro de lógica")) {
+
+                return "Caiu num Erro de lógica, mas utilizou uma ferramenta para evitar";
+            }
+            players.get(playerAtual).mover(-dado / 2, tamanhoTabueiro);
+
+            return "Caiu num Erro de Logica, irá recuar " + dado / 2 + " casas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Exception")) {
+            if (usoDeFerramenta("Exception")) {
+
+                return "Caiu numa Exception, mas utilizou uma ferramenta para evitar";
+            }
+            players.get(playerAtual).mover(-2, tamanhoTabueiro);
+
+            return "Caiu numa Exception, irá recuar 2 casas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("File Not Found Exception")) {
+            if (usoDeFerramenta("File Not Found Exception")) {
+
+                return "Caiu num File Not Found Exception, mas utilizou uma ferramenta para evitar";
+            }
+            players.get(playerAtual).mover(-3, tamanhoTabueiro);
+
+            return "Caiu num File Not Found Exception, irá recuar 3 casas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Crash (aka Rebentanço)")) {
+            if (usoDeFerramenta("Crash (aka Rebentanço)")) {
+
+                return "Caiu num Crash (aka Rebentanço), mas utilizou uma ferramenta para evitar";
+            }
+            players.get(playerAtual).mover(0, tamanhoTabueiro);
+
+            return "Caiu num Crash (aka Rebentanço), irá voltar ao inicio do tabuleiro";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Duplicated Code")) {
+
+            if (usoDeFerramenta("Duplicated Code")) {
+
+                return "Caiu num Duplicated Code, mas utilizou uma ferramenta para evitar";
+            }
+
+            players.get(playerAtual).mover(players.get(playerAtual).getPosicaoAnterior(), tamanhoTabueiro);
+
+            return "Caiu num Duplicate Code, irá recuar até á casa onde estava no inicio do turno";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Efeitos secundários")) {
+
+            if (usoDeFerramenta("Efeitos secundários")) {
+
+                return "Caiu nos Efeitos secundários, mas utilizou uma ferramenta para evitar";
+            }
+
+            players.get(playerAtual).mover(players.get(playerAtual).getPosicao2Anterior(), tamanhoTabueiro);
+
+            return "Caiu nos Efeitos secundários, irá recuar até á casa onde estava no inicio do turno anterior";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Blue Screen of Death")) {
+
+            if (usoDeFerramenta("Blue Screen of Death")) {
+
+                return "Caiu num Blue Screen of Death, mas utilizou uma ferramenta para evitar";
+            }
+
+            players.get(playerAtual).setEstado("Derrotado");
+
+            return "Caiu num Blue Screen of Death, Perdeu\n Better Luck next time;)";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Ciclo infinito")) {
+
+            if (usoDeFerramenta("Ciclo infinito")) {
+
+                return "Caiu num Ciclo infinito, mas utilizou uma ferramenta para evitar";
+            }
+
+            for (Programmer player : players) {
+                if (player.getPosicao() == players.get(playerAtual).getPosicao() && player.getId() != players.get(playerAtual).getId()) {
+                    player.setStuck("Livre");
+                }
+            }
+
+
+            players.get(playerAtual).setStuck("Preso");
+
+            return "Caiu num Ciclo infinito, Irá ficar preso até alguém o vir salvar;)";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Segmentation Fault")) { // saber se perde sempre ou so quando ia andar para tras
+            int count = 0;
+            for (Programmer programmer : players) {
+                if (players.get(playerAtual).getPosicao() == programmer.getPosicao()) {
+                    count++;
+                }
+            }
+            if (count >= 2) {
+                for (Programmer player : players) {
+
+                    if (players.get(playerAtual).getPosicao() == player.getPosicao()) {
+                        players.get(playerAtual).mover(-3, tamanhoTabueiro);
+
+                    }
+                }
+
+                return "Caiu num Segmentation Fault, Todos os jogadores nesta casa recuam 3 casas)";
+            }
+
+            return "Caiu num Segmentation Fault, Não acontece nada, pois está sozinho na casa";
+
+        }
+        return reactToTool();
+    }
+
+    public String reactToTool() {
+
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Herança")) {
+
+            if (!players.get(playerAtual).adicionaFerramenta(new Ferramenta(0))) {
+                return "Caiu numa Herança, esta ferramenta já existe no seu conjunto de ferramentas";
+            }
+
+            return "Caiu numa Herança, esta ferramenta foi adicionada ao seu conjunto de ferramentas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Programação funcional")) {
+            if (!players.get(playerAtual).adicionaFerramenta(new Ferramenta(1))) {
+                return "Caiu numa Programação funcional, esta ferramenta já existe no seu conjunto de ferramentas";
+            }
+
+            return "Caiu numa Programação funcional, esta ferramenta foi adicionada ao seu conjunto de ferramentas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Testes unitários")) {
+
+            if (!players.get(playerAtual).adicionaFerramenta(new Ferramenta(2))) {
+                return "Caiu nos Testes unitários, esta ferramenta já existe no seu conjunto de ferramentas";
+            }
+
+            return "Caiu nos Testes unitários, esta ferramenta foi adicionada ao seu conjunto de ferramentas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Tratamento de Excepções")) {
+            if (!players.get(playerAtual).adicionaFerramenta(new Ferramenta(3))) {
+                return "Caiu no Tratamento de Excepções, esta ferramenta já existe no seu conjunto de ferramentas";
+            }
+            return "Caiu no Tratamento de Excepções, esta ferramenta foi adicionada ao seu conjunto de ferramentas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("IDE")) {
+            if (!players.get(playerAtual).adicionaFerramenta(new Ferramenta(4))) {
+                return "Caiu no IDE, esta ferramenta já existe no seu conjunto de ferramentas";
+            }
+            return "Caiu no IDE, esta ferramenta foi adicionada ao seu conjunto de ferramentas";
+        }
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Ajuda Do Professor")) {
+            if (!players.get(playerAtual).adicionaFerramenta(new Ferramenta(5))) {
+                return "Caiu na Ajuda Do Professor, esta ferramenta já existe no seu conjunto de ferramentas";
+            }
+            return "Caiu na Ajuda Do Professor, esta ferramenta foi adicionada ao seu conjunto de ferramentas";
+        }
+
+        return "Erro pois caiste numa casa desconhecida";
+
     }
 
     public String reactToAbyssOrTool() {
 
+
         if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Erro de sintaxe")) {
-                players.get(playerAtual).mover(-1, tamanhoTabueiro);
-                mudaTurno();
-                return "Caiu num Erro de Sintaxe, irá recuar 1 casa";
-
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Erro de lógica")) {
-                players.get(playerAtual).mover(-dado / 2, tamanhoTabueiro);
-                mudaTurno();
-                return "Caiu num Erro de Logica, irá recuar " + dado / 2 + " casas";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Exception")) {
-                players.get(playerAtual).mover(-2, tamanhoTabueiro);
-                mudaTurno();
-                return "Caiu numa Exception, irá recuar 2 casas";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("File Not Found Exception")) {
-                players.get(playerAtual).mover(-3, tamanhoTabueiro);
-                mudaTurno();
-                return "Caiu num File Not Found Exception, irá recuar 3 casas";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Crash (aka Rebentanço)")) {
-                players.get(playerAtual).mover(0, tamanhoTabueiro);
-                mudaTurno();
-                return "Caiu num Crash (aka Rebentanço), irá voltar ao inicio do tabuleiro";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Duplicate Code")) {
-                players.get(playerAtual).mover(players.get(playerAtual).getPosicaoAnterior(), tamanhoTabueiro);
-                mudaTurno();
-                return "Caiu num Duplicate Code, irá recuar até á casa onde estava no inicio do turno";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Efeitos secundários")) {
-                players.get(playerAtual).mover(players.get(playerAtual).getPosicao2Anterior(), tamanhoTabueiro);
-                mudaTurno();
-                return "Caiu num Efeitos secundários, irá recuar até á casa onde estava no inicio do turno anterior";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Blue Screen of Death")) {
-                players.get(playerAtual).setEstado("Derrotado");
-                mudaTurno();
-                return "Caiu num Blue Screen of Death, Perdeu\n Better Luck next time;)";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Ciclo infinito")) {
-                players.get(playerAtual).setStuck("Preso");
-                mudaTurno();
-                return "Caiu num Ciclo infinito, Irá ficar preso até alguém o vir salvar;)";
-            }
-            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Segmentation Fault")) {
-                int count = 0;
-                for (Programmer programmer : players) {
-                    if (players.get(playerAtual).getPosicao() == programmer.getPosicao()) {
-                        count++;
-                    }
-                }
-                if (count >= 2) {
-                    for (Programmer player : players) {
-
-                        if (players.get(playerAtual).getPosicao() == player.getPosicao()) {
-                            players.get(playerAtual).mover(-3, tamanhoTabueiro);
-
-                        }
-                    }
-                    mudaTurno();
-                    return "Caiu num Segmentation Fault, Todos os jogadores nesta casa recuam 3 casas)";
-                }
-                mudaTurno();
-                return "Caiu num Segmentation Fault, Não acontece nada, pois está sozinho na casa";
-
-            }
+            String resulado = reactToAbyss();
+            mudaTurno();
+            return resulado;
         }
 
 
+        mudaTurno();
         return null;
-    } //falta fazer as ferramentas;
+    }
 
     public boolean gameIsOver() {
 
