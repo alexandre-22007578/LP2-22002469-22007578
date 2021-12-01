@@ -18,6 +18,11 @@ public class Programmer {
     private int posicaoAnterior = 1;
     private int posicao2Anterior = 1;
 
+
+    public ArrayList<Ferramenta> getFerramentas() {
+        return ferramentas;
+    }
+
     public void setStuck(String stuck) {
         this.stuck = stuck;
     }
@@ -43,6 +48,31 @@ public class Programmer {
         this.nome = nome;
         this.cor = cor;
         this.linguegnsFavoritas = linguegnsFavoritas;
+    }
+
+    public boolean adicionaFerramenta(Ferramenta ferramenta){
+
+        for (Ferramenta value : ferramentas) {
+            if (value.getTitulo().equals(ferramenta.getTitulo())) {
+
+               return false;
+            }
+        }
+
+        ferramentas.add(ferramenta);
+        return true;
+
+    }
+
+    public void retiraFerramenta(Ferramenta ferramenta){
+
+        for (Ferramenta value : ferramentas) {
+            if (value.getTitulo().equals(ferramenta.getTitulo())) {
+                ferramentas.remove(value);
+                break;
+            }
+        }
+
     }
 
     public int getId(){
