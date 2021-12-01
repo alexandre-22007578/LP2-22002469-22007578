@@ -7,12 +7,36 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Programmer {
-    int id;
-    String nome;
-    ProgrammerColor cor;
-    String estado ="Em Jogo";
-    int posicao=1;
-    String linguegnsFavoritas;
+    private int id;
+    private String nome;
+    private ProgrammerColor cor;
+    private String estado ="Em Jogo";
+    private int posicao=1;
+    private String linguegnsFavoritas;
+    private ArrayList<Ferramenta> ferramentas = new ArrayList<>();
+    private String stuck = "Livre";
+    private int posicaoAnterior = 1;
+    private int posicao2Anterior = 1;
+
+    public void setStuck(String stuck) {
+        this.stuck = stuck;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public int getPosicaoAnterior() {
+        return posicaoAnterior;
+    }
+
+    public int getPosicao2Anterior() {
+        return posicao2Anterior;
+    }
+
+    public String getStuck() {
+        return stuck;
+    }
 
     public Programmer(int id, String nome, ProgrammerColor cor, String linguegnsFavoritas) {
         this.id = id;
@@ -37,16 +61,34 @@ public class Programmer {
         return posicao;
     }
 
-    void aumentaPosicao(int posicao){
+   void mover(int dado,int tamanhoTabuleiro){
+        posicao2Anterior=posicaoAnterior;
+        posicaoAnterior =posicao;
+        if (dado == 0){
+            posicao = 1;
+        }else if (posicao+dado>tamanhoTabuleiro){
+            posicao = tamanhoTabuleiro+(tamanhoTabuleiro-posicao-dado);
+        }else {
+            posicao+=dado;
+        }
+   }
 
-        this.posicao+=posicao;
-    }
+    public String getProggramesInfo(){
 
-    void diminuiPosicao(int posicao,int tamanhoTabuleiro){
+        StringBuilder info = new StringBuilder(nome + " : ");
+        if (ferramentas.size()== 0){
+            info.append("No tools");
+        }else {
+            for (int i = 0; i< ferramentas.size(); i++){
+                if (i == ferramentas.size()-1) {
+                    info.append(ferramentas.get(i));
+                }else {
+                    info.append(ferramentas.get(i)).append(";");
+                }
+            }
+        }
+        return info.toString();
 
-        int posicaoSuposta = this.posicao + posicao;
-        int numeroDeCasaQueAndaParaTras=posicaoSuposta-tamanhoTabuleiro;
-        this.posicao=tamanhoTabuleiro-numeroDeCasaQueAndaParaTras;
     }
 
     public ProgrammerColor getColor(){

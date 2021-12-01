@@ -4,10 +4,10 @@ import javax.swing.*;
 import java.util.*;
 
 public class GameManager {
-
-    int tamanhoTabueiro;
-    int playerAtual;
-    int numeroTotalDeTurnos;
+    private int dado;
+    private int tamanhoTabueiro;
+    private int playerAtual;
+    private int numeroTotalDeTurnos;
 
 
     ArrayList<Programmer> players = new ArrayList<>();
@@ -66,7 +66,7 @@ public class GameManager {
             return false;
         }
 
-        players.sort(Comparator.comparingInt((Programmer) -> Programmer.id));
+        players.sort(Comparator.comparingInt(Programmer::getId));
         return true;
     }
 
@@ -155,7 +155,7 @@ public class GameManager {
                     intermedio.add(player);
                 }
             }
-            jogadores=intermedio;
+            jogadores = intermedio;
         }
         return jogadores;
 
@@ -164,7 +164,7 @@ public class GameManager {
     public List<Programmer> getProgrammers(int position) {
 
         ArrayList<Programmer> programmersInPosition = new ArrayList<>();
-        if (position < 1 || position > tamanhoTabueiro - 1) {
+        if (position < 1 || position > tamanhoTabueiro) {
             return null;
         }
         for (Programmer player : players) {
@@ -179,7 +179,13 @@ public class GameManager {
     }
 
     public String getProgrammersInfo() {
-        return "";
+        List<Programmer> players = getProgrammers(false);
+        StringBuilder info = new StringBuilder();
+        for (Programmer player : players) {
+            info.append(player.getProggramesInfo()).append(" | ");
+        }
+
+        return info.toString();
     }
 
     public int getCurrentPlayerID() {
@@ -189,56 +195,107 @@ public class GameManager {
 
     public boolean moveCurrentPlayer(int nrSpaces) {
 
+        dado = nrSpaces;
         if (nrSpaces < 1 || nrSpaces > 6) {
             return false;
         }
-        if (players.get(playerAtual).getPosicao() + nrSpaces <= tamanhoTabueiro) {
-            players.get(playerAtual).aumentaPosicao(nrSpaces);
-        } else {
-
-            players.get(playerAtual).diminuiPosicao(nrSpaces, tamanhoTabueiro);
-
+        if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Ciclo infinito") && players.get(playerAtual).getStuck().equals("Preso")) {
+                return false;
+            }
         }
 
-
-        switch (playerAtual) {
-            case 0:
-
-                playerAtual++;
-                break;
-            case 1:
-                if (players.size() != 2) {
-                    playerAtual++;
-
-                } else {
-                    playerAtual = 0;
-
-                }
-
-                break;
-            case 2:
-                if (players.size() != 3) {
-                    playerAtual++;
-
-                } else {
-                    playerAtual = 0;
-
-                }
-                break;
-            case 3:
-                playerAtual = 0;
-
-                break;
-        }
+        players.get(playerAtual).mover(nrSpaces, tamanhoTabueiro);
 
 
-        numeroTotalDeTurnos++;
         return true;
     }
 
-    public String reactToAbyssOrTool() {
-        return "";
+    public void mudaTurno() {
+        if (playerAtual == players.size() - 1) {
+            playerAtual = 0;
+        } else {
+            playerAtual++;
+        }
+        numeroTotalDeTurnos++;
     }
+
+    public String reactToAbyssOrTool() {
+
+        if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Erro de sintaxe")) {
+                players.get(playerAtual).mover(-1, tamanhoTabueiro);
+                mudaTurno();
+                return "Caiu num Erro de Sintaxe, irá recuar 1 casa";
+
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Erro de lógica")) {
+                players.get(playerAtual).mover(-dado / 2, tamanhoTabueiro);
+                mudaTurno();
+                return "Caiu num Erro de Logica, irá recuar " + dado / 2 + " casas";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Exception")) {
+                players.get(playerAtual).mover(-2, tamanhoTabueiro);
+                mudaTurno();
+                return "Caiu numa Exception, irá recuar 2 casas";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("File Not Found Exception")) {
+                players.get(playerAtual).mover(-3, tamanhoTabueiro);
+                mudaTurno();
+                return "Caiu num File Not Found Exception, irá recuar 3 casas";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Crash (aka Rebentanço)")) {
+                players.get(playerAtual).mover(0, tamanhoTabueiro);
+                mudaTurno();
+                return "Caiu num Crash (aka Rebentanço), irá voltar ao inicio do tabuleiro";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Duplicate Code")) {
+                players.get(playerAtual).mover(players.get(playerAtual).getPosicaoAnterior(), tamanhoTabueiro);
+                mudaTurno();
+                return "Caiu num Duplicate Code, irá recuar até á casa onde estava no inicio do turno";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Efeitos secundários")) {
+                players.get(playerAtual).mover(players.get(playerAtual).getPosicao2Anterior(), tamanhoTabueiro);
+                mudaTurno();
+                return "Caiu num Efeitos secundários, irá recuar até á casa onde estava no inicio do turno anterior";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Blue Screen of Death")) {
+                players.get(playerAtual).setEstado("Derrotado");
+                mudaTurno();
+                return "Caiu num Blue Screen of Death, Perdeu\n Better Luck next time;)";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Ciclo infinito")) {
+                players.get(playerAtual).setStuck("Preso");
+                mudaTurno();
+                return "Caiu num Ciclo infinito, Irá ficar preso até alguém o vir salvar;)";
+            }
+            if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Segmentation Fault")) {
+                int count = 0;
+                for (Programmer programmer : players) {
+                    if (players.get(playerAtual).getPosicao() == programmer.getPosicao()) {
+                        count++;
+                    }
+                }
+                if (count >= 2) {
+                    for (Programmer player : players) {
+
+                        if (players.get(playerAtual).getPosicao() == player.getPosicao()) {
+                            players.get(playerAtual).mover(-3, tamanhoTabueiro);
+
+                        }
+                    }
+                    mudaTurno();
+                    return "Caiu num Segmentation Fault, Todos os jogadores nesta casa recuam 3 casas)";
+                }
+                mudaTurno();
+                return "Caiu num Segmentation Fault, Não acontece nada, pois está sozinho na casa";
+
+            }
+        }
+
+
+        return null;
+    } //falta fazer as ferramentas;
 
     public boolean gameIsOver() {
 
@@ -260,7 +317,7 @@ public class GameManager {
         resultados.add("" + numeroTotalDeTurnos);
         resultados.add("");
         resultados.add("VENCEDOR");
-        players.sort(Comparator.comparingInt((Programmer position) -> position.posicao).reversed());
+        players.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
         resultados.add(players.get(0).getName());
         resultados.add("");
         resultados.add("RESTANTES");
