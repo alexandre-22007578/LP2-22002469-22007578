@@ -10,8 +10,8 @@ public class Programmer {
     private int id;
     private String nome;
     private ProgrammerColor cor;
-    private String estado ="Em Jogo";
-    private int posicao=1;
+    private String estado = "Em Jogo";
+    private int posicao = 1;
     private String linguegnsFavoritas;
     private ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     private String stuck = "Livre";
@@ -50,12 +50,12 @@ public class Programmer {
         this.linguegnsFavoritas = linguegnsFavoritas;
     }
 
-    public boolean adicionaFerramenta(Ferramenta ferramenta){
+    public boolean adicionaFerramenta(Ferramenta ferramenta) {
 
         for (Ferramenta value : ferramentas) {
             if (value.getTitulo().equals(ferramenta.getTitulo())) {
 
-               return false;
+                return false;
             }
         }
 
@@ -64,7 +64,7 @@ public class Programmer {
 
     }
 
-    public void retiraFerramenta(Ferramenta ferramenta){
+    public void retiraFerramenta(Ferramenta ferramenta) {
 
         for (Ferramenta value : ferramentas) {
             if (value.getTitulo().equals(ferramenta.getTitulo())) {
@@ -75,7 +75,7 @@ public class Programmer {
 
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 
@@ -83,36 +83,36 @@ public class Programmer {
         return estado;
     }
 
-    public String getName(){
+    public String getName() {
         return nome;
     }
 
-    public int getPosicao(){
+    public int getPosicao() {
         return posicao;
     }
 
-   void mover(int dado,int tamanhoTabuleiro){
-        posicao2Anterior=posicaoAnterior;
-        posicaoAnterior =posicao;
-        if (dado == 0){
+    void mover(int dado, int tamanhoTabuleiro) {
+        posicao2Anterior = posicaoAnterior;
+        posicaoAnterior = posicao;
+        if (dado == 0) {
             posicao = 1;
-        }else if (posicao+dado>tamanhoTabuleiro){
-            posicao = tamanhoTabuleiro+(tamanhoTabuleiro-posicao-dado);
-        }else {
-            posicao+=dado;
+        } else if (posicao + dado > tamanhoTabuleiro) {
+            posicao = tamanhoTabuleiro + (tamanhoTabuleiro - posicao - dado);
+        } else {
+            posicao += dado;
         }
-   }
+    }
 
-    public String getProggramesInfo(){
+    public String getProggramesInfo() {
 
         StringBuilder info = new StringBuilder(nome + " : ");
-        if (ferramentas.size()== 0){
+        if (ferramentas.size() == 0) {
             info.append("No tools");
-        }else {
-            for (int i = 0; i< ferramentas.size(); i++){
-                if (i == ferramentas.size()-1) {
+        } else {
+            for (int i = 0; i < ferramentas.size(); i++) {
+                if (i == ferramentas.size() - 1) {
                     info.append(ferramentas.get(i));
-                }else {
+                } else {
                     info.append(ferramentas.get(i)).append(";");
                 }
             }
@@ -121,21 +121,33 @@ public class Programmer {
 
     }
 
-    public ProgrammerColor getColor(){
+    public ProgrammerColor getColor() {
         return cor;
     }
 
     @Override
-    public String toString()
-    {
-        ArrayList<String> linguagensList= new ArrayList<>(Arrays.asList(linguegnsFavoritas.split(";")));
+    public String toString() {
+        ArrayList<String> linguagensList = new ArrayList<>(Arrays.asList(linguegnsFavoritas.split(";")));
         linguagensList.sort(String::compareTo);
         StringBuilder linguagensString = new StringBuilder();
+        StringBuilder ferramentasString = new StringBuilder();
         linguagensString.append(linguagensList.get(0));
-        for (int i = 1; i < linguagensList.size(); i++){
+
+        for (int i = 1; i < linguagensList.size(); i++) {
             linguagensString.append("; ").append(linguagensList.get(i));
         }
 
-        return id + " | " + nome + " | " + posicao + " | " + linguagensString + " | " + estado;
+        if (ferramentas.size() == 0) {
+            ferramentasString.append("No tools");
+        }
+        for (int i = 0; i < ferramentas.size(); i++) {
+            if (i == 0) {
+                ferramentasString.append(ferramentas.get(i).getTitulo());
+            } else {
+                ferramentasString.append(";").append(ferramentas.get(i).getTitulo());
+            }
+        }
+
+        return id + " | " + nome + " | " + posicao +" | "+ferramentasString +" | " + linguagensString + " | " + estado;
     }
 }
