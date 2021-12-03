@@ -94,11 +94,13 @@ public class Programmer {
     void mover(int dado, int tamanhoTabuleiro) {
         posicao2Anterior = posicaoAnterior;
         posicaoAnterior = posicao;
-        if (dado == 0) {
-            posicao = 1;
-        } else if (posicao + dado > tamanhoTabuleiro) {
+
+        if ((posicao + dado) > tamanhoTabuleiro) { // vai demasiado para a frente
             posicao = tamanhoTabuleiro + (tamanhoTabuleiro - posicao - dado);
-        } else {
+        } else if ((posicao + dado) < 1) { // vai demasiado para tras
+            posicao = 1;
+
+        } else { //normal
             posicao += dado;
         }
     }
@@ -126,7 +128,7 @@ public class Programmer {
     }
 
     @Override
-    public String toString() {
+    public String toString()    {
         ArrayList<String> linguagensList = new ArrayList<>(Arrays.asList(linguegnsFavoritas.split(";")));
         linguagensList.sort(String::compareTo);
         StringBuilder linguagensString = new StringBuilder();
@@ -148,6 +150,6 @@ public class Programmer {
             }
         }
 
-        return id + " | " + nome + " | " + posicao +" | "+ferramentasString +" | " + linguagensString + " | " + estado;
+        return id + " | " + nome + " | " + posicao + " | " + ferramentasString + " | " + linguagensString + " | " + estado;
     }
 }

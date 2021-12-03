@@ -25,6 +25,7 @@ public class GameManager {
         ProgrammerColor color;
         String linguagensProgramacao;
         HashSet<Integer> ids = new HashSet<>();
+        HashSet<ProgrammerColor> cores = new HashSet<>();
         playerAtual = 0;
 
         if (worldSize < playerInfo.length * 2 || playerInfo.length < 2 || playerInfo.length > 4) {
@@ -54,7 +55,7 @@ public class GameManager {
                     default:
                         return false;
                 }
-                if (id < 1 || !(ids.add(id))) {
+                if (id < 1 || !(ids.add(id))|| !(cores.add(color))) {
                     return false;
                 }
                 players.add(new Programmer(id, nome, color, linguagensProgramacao));
@@ -285,7 +286,7 @@ public class GameManager {
 
                 return "Caiu num Crash (aka Rebentanço), mas utilizou uma ferramenta para evitar";
             }
-            players.get(playerAtual).mover(0, tamanhoTabueiro);
+            players.get(playerAtual).mover(-players.get(playerAtual).getPosicao(), tamanhoTabueiro);
 
             return "Caiu num Crash (aka Rebentanço), irá voltar ao inicio do tabuleiro";
         }
@@ -375,7 +376,7 @@ public class GameManager {
 
             return "Caiu numa Herança, esta ferramenta foi adicionada ao seu conjunto de ferramentas";
         }
-        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Programação funcional")) {
+        if (abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo().equals("Programação Funcional")) {
             if (!players.get(playerAtual).adicionaFerramenta(new Ferramenta(1))) {
                 return "Caiu numa Programação funcional, esta ferramenta já existe no seu conjunto de ferramentas";
             }
@@ -415,8 +416,10 @@ public class GameManager {
 
     public String reactToAbyssOrTool() {
 
+        ArrayList<AbismoOrFerramenta> ola=new ArrayList<>(abismoEFerramentas.values());
 
         if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
+
             String resulado = reactToAbyss();
             mudaTurno();
             return resulado;
