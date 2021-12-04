@@ -13,22 +13,26 @@ public class Programmer {
     private String estado = "Em Jogo";
     private int posicao = 1;
     private String linguegnsFavoritas;
-    private ArrayList<Ferramenta> ferramentas = new ArrayList<>();
-    private String stuck = "Livre";
+    private ArrayList<AbismoOrFerramenta> ferramentas = new ArrayList<>();
+    private boolean stuck = false;
     private int posicaoAnterior = 1;
     private int posicao2Anterior = 1;
 
 
-    public ArrayList<Ferramenta> getFerramentas() {
+    public ArrayList<AbismoOrFerramenta> getFerramentas() {
         return ferramentas;
     }
 
-    public void setStuck(String stuck) {
-        this.stuck = stuck;
+    public void mudarEstadoPreso() {
+        this.stuck = true;
     }
 
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void mudarEstadoLivre(){
+        this.stuck=false;
+    }
+
+    public void perdeu() {
+        this.estado = "Derrotado";
     }
 
     public int getPosicaoAnterior() {
@@ -39,7 +43,7 @@ public class Programmer {
         return posicao2Anterior;
     }
 
-    public String getStuck() {
+    public boolean getStuck() {
         return stuck;
     }
 
@@ -50,9 +54,9 @@ public class Programmer {
         this.linguegnsFavoritas = linguegnsFavoritas;
     }
 
-    public boolean adicionaFerramenta(Ferramenta ferramenta) {
+    public boolean adicionaFerramenta(AbismoOrFerramenta ferramenta) {
 
-        for (Ferramenta value : ferramentas) {
+        for (AbismoOrFerramenta value : ferramentas) {
             if (value.getTitulo().equals(ferramenta.getTitulo())) {
 
                 return false;
@@ -64,9 +68,9 @@ public class Programmer {
 
     }
 
-    public void retiraFerramenta(Ferramenta ferramenta) {
+    public void retiraFerramenta(AbismoOrFerramenta ferramenta) {
 
-        for (Ferramenta value : ferramentas) {
+        for (AbismoOrFerramenta value : ferramentas) {
             if (value.getTitulo().equals(ferramenta.getTitulo())) {
                 ferramentas.remove(value);
                 break;

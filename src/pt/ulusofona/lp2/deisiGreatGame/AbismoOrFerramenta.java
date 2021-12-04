@@ -15,5 +15,18 @@ public abstract class AbismoOrFerramenta {
     public AbismoOrFerramenta(int id) {
         this.id = id;
     }
-    abstract void darTitulo();
+
+    public abstract String reactToAbyssOrTool(boolean levouCounter);
+
+    public abstract int getQuantidadePosicoesAnda(int dado,int posicaoAtual,int posicaoAnterior,int posicaoAnterior2,boolean levouCounter) throws Exception;
+
+
+
+    public abstract boolean daCounter(String nomeAbismo);
+
+
+    @Override
+    public String toString() {
+        return titulo;
+    }
 }
