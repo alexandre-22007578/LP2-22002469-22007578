@@ -41,7 +41,7 @@ public class GameManager {
         switch (id) {
             case 0 -> abismoEFerramentas.put(posicao, new Heranca(id));
             case 1 -> abismoEFerramentas.put(posicao, new ProgramacaoFuncional(id));
-            case 2 -> abismoEFerramentas.put(posicao, new TestesUnitarios(id));
+            case 2 -> abismoEFerramentas.put(posicao, new TstUnitarios(id));
             case 3 -> abismoEFerramentas.put(posicao, new TratamentoDeExcepcoes(id));
             case 4 -> abismoEFerramentas.put(posicao, new Ide(id));
             case 5 -> abismoEFerramentas.put(posicao, new AjudaDoProfessor(id));

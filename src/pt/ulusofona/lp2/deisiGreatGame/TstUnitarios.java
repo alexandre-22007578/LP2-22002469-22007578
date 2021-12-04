@@ -1,7 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class TestesUnitarios extends AbismoOrFerramenta{ //  Evita os efeitos de:Erro de Lógica
-    public TestesUnitarios(int id) {
+public class TstUnitarios extends AbismoOrFerramenta{ //  Evita os efeitos de:Erro de Lógica
+    public TstUnitarios(int id) {
         super(id);
         titulo="Testes unitários";
     }
