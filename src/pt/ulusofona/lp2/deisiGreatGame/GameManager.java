@@ -142,6 +142,10 @@ public class GameManager {
             return false;
         }
 
+        for (int i=2;i<6;i++){
+            createAbismoEAdiciona(0,i);
+        }
+
         return createInitialBoard(playerInfo, worldSize);
     }
 
@@ -259,6 +263,8 @@ public class GameManager {
 
         if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
 
+            players.get(playerAtual).adicionaFerramenta(abismoEFerramentas.get(players.get(playerAtual).getPosicao()));
+
 
             boolean daCounter = false;
             for (int i = 0; i < players.get(playerAtual).getFerramentas().size(); i++) {
@@ -269,6 +275,7 @@ public class GameManager {
                     break;
                 }
             }
+            String resulado = abismoEFerramentas.get(players.get(playerAtual).getPosicao()).reactToAbyssOrTool(daCounter);
 
 
             try {
@@ -327,7 +334,7 @@ public class GameManager {
                 }
 
             }
-            String resulado = abismoEFerramentas.get(players.get(playerAtual).getPosicao()).reactToAbyssOrTool(daCounter);
+
             mudaTurno();
             return resulado;
         }
