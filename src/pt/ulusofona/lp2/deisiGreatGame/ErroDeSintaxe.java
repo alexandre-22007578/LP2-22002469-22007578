@@ -27,6 +27,10 @@ public class ErroDeSintaxe extends AbismoOrFerramenta { // O programador recua 1
 
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

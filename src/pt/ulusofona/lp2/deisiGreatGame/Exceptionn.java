@@ -23,6 +23,10 @@ public class Exceptionn extends AbismoOrFerramenta {// O programador recua 2 cas
         return 2;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

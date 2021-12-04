@@ -20,6 +20,7 @@ public abstract class AbismoOrFerramenta {
 
     public abstract int getQuantidadePosicoesAnda(int dado,int posicaoAtual,int posicaoAnterior,int posicaoAnterior2,boolean levouCounter) throws Exception;
 
+    public abstract boolean souFerramenta();
 
 
     public abstract boolean daCounter(String nomeAbismo);

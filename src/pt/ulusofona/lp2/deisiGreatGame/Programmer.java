@@ -56,6 +56,10 @@ public class Programmer {
 
     public boolean adicionaFerramenta(AbismoOrFerramenta ferramenta) {
 
+        if (!ferramenta.souFerramenta()){
+            return false;
+        }
+
         for (AbismoOrFerramenta value : ferramentas) {
             if (value.getTitulo().equals(ferramenta.getTitulo())) {
 

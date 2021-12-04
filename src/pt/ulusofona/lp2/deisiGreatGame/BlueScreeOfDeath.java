@@ -20,6 +20,10 @@ public class BlueScreeOfDeath extends AbismoOrFerramenta {//O programador perde 
         throw new Exception(titulo);
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

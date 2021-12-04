@@ -18,6 +18,10 @@ public class ProgramacaoFuncional extends AbismoOrFerramenta { // duplicade code
         return 0;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return true;
+    }
 
 
     @Override

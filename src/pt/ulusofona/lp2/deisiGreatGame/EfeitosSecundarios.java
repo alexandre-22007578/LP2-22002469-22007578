@@ -22,6 +22,10 @@ public class EfeitosSecundarios extends AbismoOrFerramenta{// O programador recu
         return posicaoAnterior2;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

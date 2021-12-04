@@ -23,6 +23,10 @@ public class SegmentationFault extends AbismoOrFerramenta{
         throw new Exception(titulo);
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

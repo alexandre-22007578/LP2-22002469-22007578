@@ -22,6 +22,10 @@ public class DuplicatedCode extends AbismoOrFerramenta{// O programador recua at
         return posicaoAnterior;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

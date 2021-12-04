@@ -17,6 +17,10 @@ public class TratamentoDeExcepcoes extends AbismoOrFerramenta{// Evita os efeito
         return 0;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return true;
+    }
 
 
     @Override

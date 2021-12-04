@@ -23,6 +23,10 @@ public class ErroDeLogica extends AbismoOrFerramenta{// O programador recua N ca
         return dado/2;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

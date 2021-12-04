@@ -17,6 +17,10 @@ public class AjudaDoProfessor extends AbismoOrFerramenta{// Evita os efeitos de:
         return 0;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return true;
+    }
 
 
     @Override

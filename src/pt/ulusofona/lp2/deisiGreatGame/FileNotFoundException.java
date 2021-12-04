@@ -22,6 +22,10 @@ public class FileNotFoundException extends AbismoOrFerramenta{// O programador r
         return 3;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

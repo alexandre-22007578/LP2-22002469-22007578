@@ -17,6 +17,10 @@ public class Heranca extends AbismoOrFerramenta{// Evita os efeitos de: duplica√
         return 0;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return true;
+    }
 
 
     @Override

@@ -22,6 +22,10 @@ public class CrashAkaRebentanco extends AbismoOrFerramenta{// O programador volt
         return posicaoAtual;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return false;
+    }
 
 
     @Override

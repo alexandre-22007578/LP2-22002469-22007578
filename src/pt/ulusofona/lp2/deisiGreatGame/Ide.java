@@ -17,6 +17,10 @@ public class Ide extends AbismoOrFerramenta{// Evita os efeitos de:Erro de Sinta
         return 0;
     }
 
+    @Override
+    public boolean souFerramenta() {
+        return true;
+    }
 
 
     @Override
