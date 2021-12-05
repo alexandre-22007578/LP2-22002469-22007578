@@ -26,6 +26,6 @@ public class ProgramacaoFuncional extends AbismoOrFerramenta { // duplicade code
 
     @Override
     public boolean daCounter(String nomeAbismo) {
-        return nomeAbismo.equals("Duplicated Code");
+        return nomeAbismo.equals("Efeitos secundários")|| nomeAbismo.equals("Ciclo infinito");
     }
 }

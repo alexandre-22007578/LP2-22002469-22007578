@@ -231,7 +231,8 @@ public class GameManager {
         if (nrSpaces < 1 || nrSpaces > 6) {
             return false;
         }
-        if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
+
+        if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) { // so para o ciclo infinito
             if (players.get(playerAtual).getStuck()) {
                 return false;
             }
