@@ -19,7 +19,7 @@ public class DuplicatedCode extends AbismoOrFerramenta{// O programador recua at
         if (levouCounter){
             return 0;
         }
-        return posicaoAnterior;
+        return posicaoAtual-posicaoAnterior;
     }
 
     @Override

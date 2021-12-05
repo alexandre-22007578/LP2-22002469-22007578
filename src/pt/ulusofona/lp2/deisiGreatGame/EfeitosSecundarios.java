@@ -19,7 +19,7 @@ public class EfeitosSecundarios extends AbismoOrFerramenta{// O programador recu
         if (levouCounter){
             return 0;
         }
-        return posicaoAnterior2;
+        return posicaoAtual- posicaoAnterior2;
     }
 
     @Override
