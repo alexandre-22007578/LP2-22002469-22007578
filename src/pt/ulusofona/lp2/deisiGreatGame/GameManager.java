@@ -11,7 +11,6 @@ public class GameManager {
 
 
     ArrayList<Programmer> players = new ArrayList<>();
-    ArrayList<Programmer> playersDerrotados = new ArrayList<>();
     HashMap<Integer, AbismoOrFerramenta> abismoEFerramentas = new HashMap<>();
 
 
@@ -177,14 +176,19 @@ public class GameManager {
 
     public List<Programmer> getProgrammers(boolean includeDefeated) {
 
-        ArrayList<Programmer> jogadores = new ArrayList<>(players);
+        ArrayList<Programmer> jogadores = new ArrayList<>();
 
 
-        if (includeDefeated) {
+        if (!includeDefeated) {
 
-            jogadores.addAll(playersDerrotados);
+            for (Programmer player : players) {
+                if (player.getEstado().equals("Em Jogo")) {
+                    jogadores.add(player);
+                }
+            }
+            return jogadores;
         }
-        return jogadores;
+        return players;
 
     }
 
@@ -221,6 +225,14 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
+
+        if (players.get(playerAtual).getEstado().equals("Derrotado")){
+            if (playerAtual==players.size()){
+                playerAtual=0;
+            }else{
+                playerAtual++;
+            }
+        }
         return players.get(playerAtual).getId();
 
     }
@@ -321,12 +333,7 @@ public class GameManager {
                     if (e.getMessage().equals("Blue Screen of Death")) {
 
                         players.get(playerAtual).perdeu();
-                        playersDerrotados.add(players.get(playerAtual));
-                        players.remove(playerAtual);
-                        if (playerAtual == players.size() + 1) {
-                            playerAtual = 0;
-                        }
-                        numeroTotalDeTurnos++;
+                        mudaTurno();
                         return "Caiu num Blue Screen of Death, Perdeu\n Better Luck next time;)";
                     }
                 }
