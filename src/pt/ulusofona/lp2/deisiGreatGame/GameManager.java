@@ -321,7 +321,7 @@ public class GameManager {
                     if (e.getMessage().equals("Blue Screen of Death")) {
 
                         players.get(playerAtual).perdeu();
-
+                        playersDerrotados.add(players.get(playerAtual));
                         players.remove(playerAtual);
                         if (playerAtual == players.size() + 1) {
                             playerAtual = 0;
@@ -366,7 +366,7 @@ public class GameManager {
         resultados.add("" + numeroTotalDeTurnos);
         resultados.add("");
         resultados.add("VENCEDOR");
-        players.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
+        players.sort(Comparator.comparingInt(Programmer::getPosicao).reversed().thenComparing(Programmer::getName));
         resultados.add(players.get(0).getName());
         resultados.add("");
         resultados.add("RESTANTES");
