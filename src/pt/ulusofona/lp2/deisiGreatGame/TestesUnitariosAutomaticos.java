@@ -62,6 +62,7 @@ public class TestesUnitariosAutomaticos {
 
     @Test
     public void testCreateInicialBoard() {
+        Main main=new Main();
         GameManager manager = new GameManager();
         int tamanhoTabuleiro = 20;
         String[][] abyssesAndToolsValidos = criaAbyssesAndTools();
@@ -121,12 +122,12 @@ public class TestesUnitariosAutomaticos {
         abismos[0][1] = "5";
         abismos[0][2] = "5";
         manager.createInitialBoard(jogadoresValidos, tamanhoTabuleiro, abismos);
-        manager.moveCurrentPlayer(5);
-        List<Programmer> programmers = manager.getProgrammers(6);
+        manager.moveCurrentPlayer(4);
+        List<Programmer> programmers = manager.getProgrammers(5);
         assertEquals(1, programmers.size());
         assertSame("Alexandre", programmers.get(0).getName());
         manager.reactToAbyssOrTool();
-        assertEquals(1, manager.getProgrammers(1).get(0).getPosicao());
+        assertEquals(1, manager.getProgrammers(false).get(0).getPosicao());
 
     }
 
@@ -159,27 +160,97 @@ public class TestesUnitariosAutomaticos {
 
         manager.moveCurrentPlayer(1);
         manager.reactToAbyssOrTool();
-        List<Programmer> programmers = manager.getProgrammers(2);
+        List<Programmer> programmers = manager.getProgrammers(false);
         assertEquals("Erro ao avançar para ganhar ferramenta Herança","4 | Guilherme | 2 | Herança | Java | Em Jogo", programmers.get(0).toString());
 
         manager.moveCurrentPlayer(2);
         manager.reactToAbyssOrTool();
-        programmers = manager.getProgrammers(3);
-        assertEquals("Erro ao andar para casa vazia","21 | Pizzi | 3 | No tools | C | Em Jogo", programmers.get(0).toString());
+        programmers = manager.getProgrammers(false);
+        assertEquals("Erro ao andar para casa vazia","21 | Pizzi | 3 | No tools | C | Em Jogo", programmers.get(1).toString());
 
         manager.moveCurrentPlayer(3);
         manager.reactToAbyssOrTool();
-        programmers = manager.getProgrammers(5);
+        programmers = manager.getProgrammers(false);
         assertEquals("Erro caiu num duplicated code e comportamento errado","4 | Guilherme | 5 | No tools | Java | Em Jogo", programmers.get(0).toString());
 
         manager.moveCurrentPlayer(2);
         manager.reactToAbyssOrTool();
-        programmers = manager.getProgrammers(3);
-        assertEquals("Erro depois de cair no duplicated code sem ter ferramenta","21 | Pizzi | 3 | No tools | C | Em Jogo", programmers.get(0).toString());
+        programmers = manager.getProgrammers(false);
+        assertEquals("Erro depois de cair no duplicated code sem ter ferramenta","21 | Pizzi | 3 | No tools | C | Em Jogo", programmers.get(1).toString());
+
 
 
 
     }
 
+    @Test
+    public void testeErroSintaxe(){
 
+        GameManager manager = new GameManager();
+        int tamanhoTabuleiro = 10;
+        String[][] jogadoresValidos = criarJogadores();
+
+        String[][] abismos = new String[1][3];
+        abismos[0][0] = "0";
+        abismos[0][1] = "0";
+        abismos[0][2] = "6";
+
+        manager.createInitialBoard(jogadoresValidos, tamanhoTabuleiro, abismos);
+        manager.moveCurrentPlayer(5);
+        System.out.println(manager.players.get(0));
+        List<Programmer> programmers = manager.getProgrammers(6);
+        assertEquals(1, programmers.size());
+        assertSame("Alexandre", programmers.get(0).getName());
+        manager.reactToAbyssOrTool();
+        assertEquals(5, manager.getProgrammers(false).get(0).getPosicao());
+
+
+    }
+
+    @Test
+    public void testeErroSintaxe2(){
+        GameManager manager = new GameManager();
+        int tamanhoTabuleiro = 10;
+        String[][] jogadoresValidos = new String[2][4];
+        jogadoresValidos[0][0] = "4";
+        jogadoresValidos[0][1] = "Guilherme";
+        jogadoresValidos[0][2] = "Java";
+        jogadoresValidos[0][3] = "Purple";
+
+        jogadoresValidos[1][0] = "21";
+        jogadoresValidos[1][1] = "Pizzi";
+        jogadoresValidos[1][2] = "C";
+        jogadoresValidos[1][3] = "Green";
+
+        String[][] abismos = new String[2][3];
+        abismos[0][0] = "0";
+        abismos[0][1] = "0";
+        abismos[0][2] = "5";
+
+        abismos[1][0] = "1";
+        abismos[1][1] = "5";
+        abismos[1][2] = "2";
+
+        manager.createInitialBoard(jogadoresValidos, tamanhoTabuleiro, abismos);
+
+        manager.moveCurrentPlayer(1);
+        manager.reactToAbyssOrTool();
+        List<Programmer> programmers = manager.getProgrammers(false);
+        assertEquals("Erro ao avançar para ganhar ferramenta Herança","4 | Guilherme | 2 | Ajuda Do Professor | Java | Em Jogo", programmers.get(0).toString());
+
+        manager.moveCurrentPlayer(2);
+        manager.reactToAbyssOrTool();
+        programmers = manager.getProgrammers(false);
+        assertEquals("Erro ao andar para casa vazia","21 | Pizzi | 3 | No tools | C | Em Jogo", programmers.get(1).toString());
+
+        manager.moveCurrentPlayer(3);
+        manager.reactToAbyssOrTool();
+        programmers = manager.getProgrammers(false);
+        assertEquals("Erro caiu num erro de sintaxe com ferramenta e comportamento errado","4 | Guilherme | 5 | No tools | Java | Em Jogo", programmers.get(0).toString());
+
+        manager.moveCurrentPlayer(2);
+        manager.reactToAbyssOrTool();
+        programmers = manager.getProgrammers(false);
+        assertEquals("Erro depois de cair no duplicated code sem ter ferramenta","21 | Pizzi | 4 | No tools | C | Em Jogo", programmers.get(1).toString());
+    }
 }

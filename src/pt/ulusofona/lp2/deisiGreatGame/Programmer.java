@@ -3,8 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+
 
 public class Programmer {
     private int id;
@@ -27,8 +26,8 @@ public class Programmer {
         this.stuck = true;
     }
 
-    public void mudarEstadoLivre(){
-        this.stuck=false;
+    public void mudarEstadoLivre() {
+        this.stuck = false;
     }
 
     public void perdeu() {
@@ -56,7 +55,7 @@ public class Programmer {
 
     public boolean adicionaFerramenta(AbismoOrFerramenta ferramenta) {
 
-        if (!ferramenta.souFerramenta()){
+        if (!ferramenta.souFerramenta()) {
             return false;
         }
 
@@ -136,7 +135,7 @@ public class Programmer {
     }
 
     @Override
-    public String toString()    {
+    public String toString() {
         ArrayList<String> linguagensList = new ArrayList<>(Arrays.asList(linguegnsFavoritas.split(";")));
         linguagensList.sort(String::compareTo);
         StringBuilder linguagensString = new StringBuilder();

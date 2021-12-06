@@ -12,6 +12,7 @@ public class CicloInfinito extends AbismoOrFerramenta{
 
     @Override
     public String reactToAbyssOrTool(boolean levouCounter) {
+
         if (levouCounter){
             return "Caiu num Ciclo infinito, mas utilizou uma ferramenta para evitar";
         }

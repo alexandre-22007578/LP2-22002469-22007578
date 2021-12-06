@@ -226,10 +226,11 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
 
-        if (players.get(playerAtual).getEstado().equals("Derrotado")){
-            if (playerAtual==players.size()){
-                playerAtual=0;
-            }else{
+        if (players.get(playerAtual).getEstado().equals("Derrotado")) {
+
+            if (playerAtual == players.size()) {
+                playerAtual = 0;
+            } else {
                 playerAtual++;
             }
         }
@@ -289,7 +290,7 @@ public class GameManager {
 
 
             try {
-             players.get(playerAtual).mover(-abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getQuantidadePosicoesAnda(dado, posicao, posicaoAnterior, posicaoAnterior2, daCounter), tamanhoTabueiro);
+                players.get(playerAtual).mover(-abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getQuantidadePosicoesAnda(dado, posicao, posicaoAnterior, posicaoAnterior2, daCounter), tamanhoTabueiro);
 
             } catch (Exception e) {
 

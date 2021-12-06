@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 public class ProgramacaoFuncional extends AbismoOrFerramenta { // duplicade code
+
     public ProgramacaoFuncional(int id) {
         super(id);
         titulo = "Programação Funcional";
@@ -26,6 +27,6 @@ public class ProgramacaoFuncional extends AbismoOrFerramenta { // duplicade code
 
     @Override
     public boolean daCounter(String nomeAbismo) {
-        return nomeAbismo.equals("Efeitos secundários")|| nomeAbismo.equals("Ciclo infinito");
+        return nomeAbismo.equals("Efeitos secundários") || nomeAbismo.equals("Ciclo infinito");
     }
 }
