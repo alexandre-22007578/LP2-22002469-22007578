@@ -233,6 +233,7 @@ public class GameManager {
             } else {
                 playerAtual++;
             }
+            return getCurrentPlayerID();
         }
         return players.get(playerAtual).getId();
 
