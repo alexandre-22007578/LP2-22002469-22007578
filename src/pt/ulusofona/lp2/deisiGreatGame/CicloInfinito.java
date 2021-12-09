@@ -26,7 +26,7 @@ public class CicloInfinito extends AbismoOrFerramenta {
         if (!levouCounter) {
             for (Programmer jogador : players) {
                 if (jogador.getPosicao() == player.getPosicao() && jogador.getId() != player.getId()) {
-                    player.mudarEstadoLivre();
+                    jogador.mudarEstadoLivre();
                 }
             }
         }

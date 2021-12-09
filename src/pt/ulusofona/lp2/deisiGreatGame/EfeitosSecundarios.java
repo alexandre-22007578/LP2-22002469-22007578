@@ -20,7 +20,7 @@ public class EfeitosSecundarios extends AbismoOrFerramenta {// O programador rec
     @Override
     public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
         if (!levouCounter) {
-            player.mover(-player.getPosicao() - player.getPosicao2Anterior(), tamanhoTabuleiro);
+            player.mover(-(player.getPosicao() - player.getPosicao2Anterior()), tamanhoTabuleiro);
         }
         return reactToAbyssOrTool(levouCounter);
 

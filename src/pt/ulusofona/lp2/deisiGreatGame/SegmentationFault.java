@@ -34,7 +34,7 @@ public class SegmentationFault extends AbismoOrFerramenta {
                 for (Programmer jogador : players) {
 
                     if (player.getPosicao() == jogador.getPosicao()) {
-                        player.mover(-3, tamanhoTabuleiro);
+                        jogador.mover(-3, tamanhoTabuleiro);
 
                     }
                 }
