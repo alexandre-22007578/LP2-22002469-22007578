@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
+
 public class TratamentoDeExcepcoes extends AbismoOrFerramenta{// Evita os efeitos de:Exception,File Not Found Exception
     public TratamentoDeExcepcoes(int id) {
         super(id);
@@ -13,9 +15,11 @@ public class TratamentoDeExcepcoes extends AbismoOrFerramenta{// Evita os efeito
     }
 
     @Override
-    public int getQuantidadePosicoesAnda(int dado, int posicaoAtual, int posicaoAnterior, int posicaoAnterior2, boolean levouCounter) throws Exception {
-        return 0;
+    public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
+        return reactToAbyssOrTool(levouCounter);
     }
+
+
 
     @Override
     public boolean souFerramenta() {

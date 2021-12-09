@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
+
 public class CrashAkaRebentanco extends AbismoOrFerramenta{// O programador volta à primeira casa do jogo.
     public CrashAkaRebentanco(int id) {
         super(id);
@@ -15,12 +17,14 @@ public class CrashAkaRebentanco extends AbismoOrFerramenta{// O programador volt
     }
 
     @Override
-    public int getQuantidadePosicoesAnda(int dado, int posicaoAtual, int posicaoAnterior, int posicaoAnterior2, boolean levouCounter) throws Exception {
-        if (levouCounter){
-            return 0;
+    public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
+        if (!levouCounter){
+            player.mover(-player.getPosicao(),tamanhoTabuleiro);
         }
-        return posicaoAtual;
+        return reactToAbyssOrTool(levouCounter);
     }
+
+
 
     @Override
     public boolean souFerramenta() {

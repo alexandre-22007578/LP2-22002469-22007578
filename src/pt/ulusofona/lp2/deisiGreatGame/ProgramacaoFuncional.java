@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
+
 public class ProgramacaoFuncional extends AbismoOrFerramenta { // duplicade code
 
     public ProgramacaoFuncional(int id) {
@@ -15,9 +17,10 @@ public class ProgramacaoFuncional extends AbismoOrFerramenta { // duplicade code
     }
 
     @Override
-    public int getQuantidadePosicoesAnda(int dado, int posicaoAtual, int posicaoAnterior, int posicaoAnterior2, boolean levouCounter) throws Exception {
-        return 0;
+    public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
+        return reactToAbyssOrTool(levouCounter);
     }
+
 
     @Override
     public boolean souFerramenta() {

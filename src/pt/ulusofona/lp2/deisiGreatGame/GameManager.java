@@ -17,6 +17,8 @@ public class GameManager {
     public GameManager() {
     }
 
+
+
     public void createAbismoEAdiciona(int id, int posicao) {
 
 
@@ -269,9 +271,7 @@ public class GameManager {
     }
 
     public String reactToAbyssOrTool() {
-        int posicao = players.get(playerAtual).getPosicao();
-        int posicaoAnterior = players.get(playerAtual).getPosicaoAnterior();
-        int posicaoAnterior2 = players.get(playerAtual).getPosicao2Anterior();
+
 
         if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
 
@@ -287,10 +287,16 @@ public class GameManager {
                     break;
                 }
             }
-            String resulado = abismoEFerramentas.get(players.get(playerAtual).getPosicao()).reactToAbyssOrTool(daCounter);
+            String resulado =  abismoEFerramentas.get(players.get(playerAtual).getPosicao()).move(dado, players.get(playerAtual), tamanhoTabueiro, daCounter,players);
 
 
-            try {
+
+            mudaTurno();
+            return resulado;
+        }
+
+          /*  try {
+
                 players.get(playerAtual).mover(-abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getQuantidadePosicoesAnda(dado, posicao, posicaoAnterior, posicaoAnterior2, daCounter), tamanhoTabueiro);
 
             } catch (Exception e) {
@@ -340,11 +346,9 @@ public class GameManager {
                     }
                 }
 
-            }
+            }*/
 
-            mudaTurno();
-            return resulado;
-        }
+
 
 
         mudaTurno();

@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
+
 public class FileNotFoundException extends AbismoOrFerramenta{// O programador recua 3 casa
     public FileNotFoundException(int id) {
         super(id);
@@ -15,12 +17,14 @@ public class FileNotFoundException extends AbismoOrFerramenta{// O programador r
     }
 
     @Override
-    public int getQuantidadePosicoesAnda(int dado, int posicaoAtual, int posicaoAnterior, int posicaoAnterior2, boolean levouCounter) throws Exception {
-        if (levouCounter){
-            return 0;
+    public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
+        if (!levouCounter){
+            player.mover(-3,tamanhoTabuleiro);
         }
-        return 3;
+        return reactToAbyssOrTool(levouCounter);
     }
+
+
 
     @Override
     public boolean souFerramenta() {

@@ -1,6 +1,9 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
+
 public class BlueScreeOfDeath extends AbismoOrFerramenta {//O programador perde imediatamente o jogo
+
     public BlueScreeOfDeath(int id) {
         super(id);
         titulo = "Blue Screen of Death";
@@ -9,16 +12,19 @@ public class BlueScreeOfDeath extends AbismoOrFerramenta {//O programador perde 
     @Override
     public String reactToAbyssOrTool(boolean levouCounter) {
 
-        if (levouCounter){
+        if (levouCounter) {
             return "Caiu num Blue Screen of Death, mas utilizou uma ferramenta para evitar";
         }
         return "Caiu num Blue Screen of Death, Perdeu\n Better Luck next time;)";
     }
 
     @Override
-    public int getQuantidadePosicoesAnda(int dado, int posicaoAtual, int posicaoAnterior, int posicaoAnterior2, boolean levouCounter) throws Exception {
-        throw new Exception(titulo);
+    public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
+        player.perdeu();
+        return reactToAbyssOrTool(levouCounter);
+
     }
+
 
     @Override
     public boolean souFerramenta() {

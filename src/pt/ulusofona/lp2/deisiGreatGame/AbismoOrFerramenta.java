@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
+
 public abstract class AbismoOrFerramenta {
     protected int id;
     protected String titulo;
@@ -18,12 +20,14 @@ public abstract class AbismoOrFerramenta {
 
     public abstract String reactToAbyssOrTool(boolean levouCounter);
 
-    public abstract int getQuantidadePosicoesAnda(int dado,int posicaoAtual,int posicaoAnterior,int posicaoAnterior2,boolean levouCounter) throws Exception;
+    public abstract String  move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players);
 
     public abstract boolean souFerramenta();
 
 
     public abstract boolean daCounter(String nomeAbismo);
+
+
 
 
     @Override
