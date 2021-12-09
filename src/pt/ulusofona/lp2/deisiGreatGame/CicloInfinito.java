@@ -29,8 +29,9 @@ public class CicloInfinito extends AbismoOrFerramenta {
                     jogador.mudarEstadoLivre();
                 }
             }
+            player.mudarEstadoPreso();
         }
-        player.mudarEstadoPreso();
+
         return reactToAbyssOrTool(levouCounter);
 
     }
