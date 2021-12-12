@@ -61,7 +61,6 @@ public class Programmer {
 
         for (AbismoOrFerramenta value : ferramentas) {
             if (value.getTitulo().equals(ferramenta.getTitulo())) {
-
                 return false;
             }
         }

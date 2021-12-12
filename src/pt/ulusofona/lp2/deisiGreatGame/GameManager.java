@@ -143,7 +143,6 @@ public class GameManager {
             return false;
         }
 
-
         return createInitialBoard(playerInfo, worldSize);
     }
 
@@ -295,73 +294,19 @@ public class GameManager {
             return resulado;
         }
 
-          /*  try {
-
-                players.get(playerAtual).mover(-abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getQuantidadePosicoesAnda(dado, posicao, posicaoAnterior, posicaoAnterior2, daCounter), tamanhoTabueiro);
-
-            } catch (Exception e) {
-
-                if (!daCounter) {
-
-
-                    if (e.getMessage().equals("Ciclo infinito")) {
-                        for (Programmer player : players) {
-                            if (player.getPosicao() == players.get(playerAtual).getPosicao() && player.getId() != players.get(playerAtual).getId()) {
-                                player.mudarEstadoLivre();
-                            }
-                        }
-                        players.get(playerAtual).mudarEstadoPreso();
-                        String resultado = abismoEFerramentas.get(players.get(playerAtual).getPosicao()).reactToAbyssOrTool(false);
-                        mudaTurno();
-                        return resultado;
-                    }
-
-                    if (e.getMessage().equals("Segmentation Fault")) {
-                        int count = 0;
-                        for (Programmer programmer : players) {
-                            if (players.get(playerAtual).getPosicao() == programmer.getPosicao()) {
-                                count++;
-                            }
-                        }
-                        if (count >= 2) {
-                            for (Programmer player : players) {
-
-                                if (players.get(playerAtual).getPosicao() == player.getPosicao()) {
-                                    player.mover(-3, tamanhoTabueiro);
-
-                                }
-                            }
-                            mudaTurno();
-                            return "Caiu num Segmentation Fault, Todos os jogadores nesta casa recuam 3 casas)";
-                        }
-                        String resultado = abismoEFerramentas.get(players.get(playerAtual).getPosicao()).reactToAbyssOrTool(false);
-                        mudaTurno();
-                        return resultado;
-                    }
-                    if (e.getMessage().equals("Blue Screen of Death")) {
-
-                        players.get(playerAtual).perdeu();
-                        mudaTurno();
-                        return "Caiu num Blue Screen of Death, Perdeu\n Better Luck next time;)";
-                    }
-                }
-
-            }*/
-
-
-
-
         mudaTurno();
         return null;
     }
 
     public boolean gameIsOver() {
 
-        if (players.size() == 1) {
+
+
+        if (getProgrammers(false).size() == 1) {
             return true;
         }
 
-        for (Programmer player : players) {
+        for (Programmer player : getProgrammers(false)) {
             if (player.getPosicao() == tamanhoTabueiro) {
                 return true;
             }

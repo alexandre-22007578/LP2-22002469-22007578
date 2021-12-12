@@ -21,6 +21,7 @@ public class SegmentationFault extends AbismoOrFerramenta {
 
     @Override
     public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
+
         if (!levouCounter) {
 
 

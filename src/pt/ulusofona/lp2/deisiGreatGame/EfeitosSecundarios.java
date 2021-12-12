@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 
-public class EfeitosSecundarios extends AbismoOrFerramenta {// O programador recua para a posição onde estava há 2 movimentos atrás.
+public class EfeitosSecundarios extends AbismoOrFerramenta { // O programador recua para a posição onde estava há 2 movimentos atrás.
 
     public EfeitosSecundarios(int id) {
         super(id);
