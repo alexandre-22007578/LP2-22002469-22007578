@@ -24,7 +24,6 @@ public class SegmentationFault extends AbismoOrFerramenta {
 
         if (!levouCounter) {
 
-
             int count = 0;
             for (Programmer programmer : players) {
                 if (player.getPosicao() == programmer.getPosicao()) {

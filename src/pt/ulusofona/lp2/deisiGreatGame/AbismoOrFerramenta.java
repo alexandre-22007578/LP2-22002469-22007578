@@ -25,6 +25,7 @@ public abstract class AbismoOrFerramenta {
     public abstract boolean souFerramenta();
 
 
+
     public abstract boolean daCounter(String nomeAbismo);
 
 

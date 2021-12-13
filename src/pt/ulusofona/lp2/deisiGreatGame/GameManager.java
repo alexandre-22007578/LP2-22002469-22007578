@@ -5,7 +5,7 @@ import java.util.*;
 
 public class GameManager {
     private int dado;
-    private int tamanhoTabueiro;
+    private int tamanhoTabuleiro;
     private int playerAtual;
     private int numeroTotalDeTurnos;
 
@@ -17,7 +17,9 @@ public class GameManager {
     public GameManager() {
     }
 
-
+    public HashMap<Integer, AbismoOrFerramenta> getAbismoEFerramentas() {
+        return abismoEFerramentas;
+    }
 
     public void createAbismoEAdiciona(int id, int posicao) {
 
@@ -92,10 +94,10 @@ public class GameManager {
                     return false;
                 }
                 players.add(new Programmer(id, nome, color, linguagensProgramacao));
-                this.tamanhoTabueiro = worldSize;
+
 
             }
-
+            this.tamanhoTabuleiro = worldSize;
         } catch (Exception e) {
             return false;
         }
@@ -143,11 +145,13 @@ public class GameManager {
             return false;
         }
 
+
         return createInitialBoard(playerInfo, worldSize);
     }
 
     public String getTitle(int position) {
-        if (position < 0 || position > tamanhoTabueiro) {
+
+        if (position < 0 || position > tamanhoTabuleiro) {
             return null;
         }
         if (abismoEFerramentas.containsKey(position)) {
@@ -158,12 +162,12 @@ public class GameManager {
 
     public String getImagePng(int position) {
 
-        if (position < 0 || position > tamanhoTabueiro) {
+        if (position < 0 || position > tamanhoTabuleiro) {
             return null;
         }
 
-        if (position == tamanhoTabueiro) {
-            return "podium.png.jpg";
+        if (position == tamanhoTabuleiro) {
+            return "podium.png";
         }
 
         if (abismoEFerramentas.containsKey(position)) {
@@ -196,7 +200,7 @@ public class GameManager {
     public List<Programmer> getProgrammers(int position) {
 
         ArrayList<Programmer> programmersInPosition = new ArrayList<>();
-        if (position < 1 || position > tamanhoTabueiro) {
+        if (position < 1 || position > tamanhoTabuleiro) {
             return null;
         }
         for (Programmer player : players) {
@@ -226,10 +230,11 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
+        String estado=players.get(playerAtual).getEstado();
 
-        if (players.get(playerAtual).getEstado().equals("Derrotado")) {
+        if (estado.equals("Derrotado")) {
 
-            if (playerAtual == players.size()) {
+            if (playerAtual == players.size()-1) {
                 playerAtual = 0;
             } else {
                 playerAtual++;
@@ -253,13 +258,14 @@ public class GameManager {
             }
         }
 
-        players.get(playerAtual).mover(nrSpaces, tamanhoTabueiro);
+        players.get(playerAtual).mover(nrSpaces, tamanhoTabuleiro);
 
 
         return true;
     }
 
     public void mudaTurno() {
+
         if (playerAtual == players.size() - 1) {
             playerAtual = 0;
         } else {
@@ -286,9 +292,7 @@ public class GameManager {
                     break;
                 }
             }
-            String resulado =  abismoEFerramentas.get(players.get(playerAtual).getPosicao()).move(dado, players.get(playerAtual), tamanhoTabueiro, daCounter,players);
-
-
+            String resulado =  abismoEFerramentas.get(players.get(playerAtual).getPosicao()).move(dado, players.get(playerAtual), tamanhoTabuleiro, daCounter,players);
 
             mudaTurno();
             return resulado;
@@ -300,14 +304,12 @@ public class GameManager {
 
     public boolean gameIsOver() {
 
-
-
         if (getProgrammers(false).size() == 1) {
             return true;
         }
 
         for (Programmer player : getProgrammers(false)) {
-            if (player.getPosicao() == tamanhoTabueiro) {
+            if (player.getPosicao() == tamanhoTabuleiro) {
                 return true;
             }
         }
