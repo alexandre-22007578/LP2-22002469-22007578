@@ -509,6 +509,13 @@ public class TestesUnitariosAutomaticos {
         manager.reactToAbyssOrTool();
 
         assertFalse("erro mover num ciclo infinito",manager.moveCurrentPlayer(2));
+        manager.reactToAbyssOrTool();
+        manager.moveCurrentPlayer(1);
+        manager.reactToAbyssOrTool();
+        List<Programmer> programmers = manager.getProgrammers(false);
+        assertTrue(programmers.get(1).getStuck());
+        assertFalse(programmers.get(0).getStuck());
+
 
 
 

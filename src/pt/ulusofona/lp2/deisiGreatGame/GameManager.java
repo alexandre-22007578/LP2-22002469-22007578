@@ -231,8 +231,9 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
         String estado=players.get(playerAtual).getEstado();
+        boolean preso=players.get(playerAtual).getStuck();
 
-        if (estado.equals("Derrotado")) {
+        if (estado.equals("Derrotado") || preso) {
 
             if (playerAtual == players.size()-1) {
                 playerAtual = 0;
