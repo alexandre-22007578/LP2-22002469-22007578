@@ -8,33 +8,32 @@ public class GameManager {
     private int tamanhoTabuleiro;
     private int playerAtual;
     private int numeroTotalDeTurnos;
-
-
-    ArrayList<Programmer> players = new ArrayList<>();
-    HashMap<Integer, AbismoOrFerramenta> abismoEFerramentas = new HashMap<>();
+    private  ArrayList<Programmer> players = new ArrayList<>();
+    private  HashMap<Integer, AbismoOrFerramenta> abismosEFerramentas = new HashMap<>();
 
 
     public GameManager() {
     }
 
-    public HashMap<Integer, AbismoOrFerramenta> getAbismoEFerramentas() {
-        return abismoEFerramentas;
+
+    public HashMap<Integer, AbismoOrFerramenta> getAbismosEFerramentas() {
+        return abismosEFerramentas;
     }
 
     public void createAbismoEAdiciona(int id, int posicao) {
 
 
         switch (id) {
-            case 0 -> abismoEFerramentas.put(posicao, new ErroDeSintaxe(id));
-            case 1 -> abismoEFerramentas.put(posicao, new ErroDeLogica(id));
-            case 2 -> abismoEFerramentas.put(posicao, new Exceptionn(id));
-            case 3 -> abismoEFerramentas.put(posicao, new FileNotFoundException(id));
-            case 4 -> abismoEFerramentas.put(posicao, new CrashAkaRebentanco(id));
-            case 5 -> abismoEFerramentas.put(posicao, new DuplicatedCode(id));
-            case 6 -> abismoEFerramentas.put(posicao, new EfeitosSecundarios(id));
-            case 7 -> abismoEFerramentas.put(posicao, new BlueScreeOfDeath(id));
-            case 8 -> abismoEFerramentas.put(posicao, new CicloInfinito(id));
-            case 9 -> abismoEFerramentas.put(posicao, new SegmentationFault(id));
+            case 0 -> abismosEFerramentas.put(posicao, new ErroDeSintaxe(id));
+            case 1 -> abismosEFerramentas.put(posicao, new ErroDeLogica(id));
+            case 2 -> abismosEFerramentas.put(posicao, new Exceptionn(id));
+            case 3 -> abismosEFerramentas.put(posicao, new FileNotFoundException(id));
+            case 4 -> abismosEFerramentas.put(posicao, new CrashAkaRebentanco(id));
+            case 5 -> abismosEFerramentas.put(posicao, new DuplicatedCode(id));
+            case 6 -> abismosEFerramentas.put(posicao, new EfeitosSecundarios(id));
+            case 7 -> abismosEFerramentas.put(posicao, new BlueScreeOfDeath(id));
+            case 8 -> abismosEFerramentas.put(posicao, new CicloInfinito(id));
+            case 9 -> abismosEFerramentas.put(posicao, new SegmentationFault(id));
 
 
         }
@@ -42,12 +41,12 @@ public class GameManager {
 
     public void createFerramentaEAdiciona(int id, int posicao) {
         switch (id) {
-            case 0 -> abismoEFerramentas.put(posicao, new Heranca(id));
-            case 1 -> abismoEFerramentas.put(posicao, new ProgramacaoFuncional(id));
-            case 2 -> abismoEFerramentas.put(posicao, new TstUnitarios(id));
-            case 3 -> abismoEFerramentas.put(posicao, new TratamentoDeExcepcoes(id));
-            case 4 -> abismoEFerramentas.put(posicao, new Ide(id));
-            case 5 -> abismoEFerramentas.put(posicao, new AjudaDoProfessor(id));
+            case 0 -> abismosEFerramentas.put(posicao, new Heranca(id));
+            case 1 -> abismosEFerramentas.put(posicao, new ProgramacaoFuncional(id));
+            case 2 -> abismosEFerramentas.put(posicao, new TstUnitarios(id));
+            case 3 -> abismosEFerramentas.put(posicao, new TratamentoDeExcepcoes(id));
+            case 4 -> abismosEFerramentas.put(posicao, new Ide(id));
+            case 5 -> abismosEFerramentas.put(posicao, new AjudaDoProfessor(id));
 
         }
     }
@@ -108,7 +107,7 @@ public class GameManager {
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
 
-        abismoEFerramentas.clear();
+        abismosEFerramentas.clear();
         int abismoOrFerramenta;
         int id;
         int posicao;
@@ -154,8 +153,8 @@ public class GameManager {
         if (position < 0 || position > tamanhoTabuleiro) {
             return null;
         }
-        if (abismoEFerramentas.containsKey(position)) {
-            return abismoEFerramentas.get(position).getTitulo();
+        if (abismosEFerramentas.containsKey(position)) {
+            return abismosEFerramentas.get(position).getTitulo();
         }
         return null;
     }
@@ -170,8 +169,8 @@ public class GameManager {
             return "podium.png";
         }
 
-        if (abismoEFerramentas.containsKey(position)) {
-            return abismoEFerramentas.get(position).getTitulo() + ".png";
+        if (abismosEFerramentas.containsKey(position)) {
+            return abismosEFerramentas.get(position).getTitulo() + ".png";
         }
 
 
@@ -220,9 +219,9 @@ public class GameManager {
 
         for (int i = 0; i < players.size(); i++) {
             if (i == players.size() - 1) {
-                info.append(players.get(i).getProggramesInfo());
+                info.append(players.get(i).getProgrammersInfo());
             } else {
-                info.append(players.get(i).getProggramesInfo()).append(" | ");
+                info.append(players.get(i).getProgrammersInfo()).append(" | ");
             }
         }
 
@@ -252,7 +251,7 @@ public class GameManager {
             return false;
         }
 
-        if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) { // so para o ciclo infinito
+        if (abismosEFerramentas.containsKey(players.get(playerAtual).getPosicao())) { // so para o ciclo infinito
             if (players.get(playerAtual).getStuck()) {
                 return false;
             }
@@ -278,21 +277,21 @@ public class GameManager {
     public String reactToAbyssOrTool() {
 
 
-        if (abismoEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
+        if (abismosEFerramentas.containsKey(players.get(playerAtual).getPosicao())) {
 
-            players.get(playerAtual).adicionaFerramenta(abismoEFerramentas.get(players.get(playerAtual).getPosicao()));
+            players.get(playerAtual).adicionaFerramenta(abismosEFerramentas.get(players.get(playerAtual).getPosicao()));
 
 
             boolean daCounter = false;
             for (int i = 0; i < players.get(playerAtual).getFerramentas().size(); i++) {
 
-                daCounter = players.get(playerAtual).getFerramentas().get(i).daCounter(abismoEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo());
+                daCounter = players.get(playerAtual).getFerramentas().get(i).daCounter(abismosEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo());
                 if (daCounter) {
                     players.get(playerAtual).retiraFerramenta(players.get(playerAtual).getFerramentas().get(i));
                     break;
                 }
             }
-            String resulado =  abismoEFerramentas.get(players.get(playerAtual).getPosicao()).move(dado, players.get(playerAtual), tamanhoTabuleiro, daCounter,players);
+            String resulado =  abismosEFerramentas.get(players.get(playerAtual).getPosicao()).move(dado, players.get(playerAtual), tamanhoTabuleiro, daCounter,players);
 
             mudaTurno();
             return resulado;

@@ -3,7 +3,6 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import org.junit.Test;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -76,7 +75,7 @@ public class TestesUnitariosAutomaticos {
         abismos[0][2] = "2";
 
         manager.createInitialBoard(jogadoresValidos, tamanhoTabuleiro, abismos);
-        HashMap<Integer, AbismoOrFerramenta> abismoOrFerramentas = manager.getAbismoEFerramentas();
+        HashMap<Integer, AbismoOrFerramenta> abismoOrFerramentas = manager.getAbismosEFerramentas();
         assertEquals("Erro no titulo", "Erro de sintaxe", abismoOrFerramentas.get(2).toString());
         assertNull("Erro titulo",manager.getTitle(99));
         assertNull("Erro titulo",manager.getTitle(5));
@@ -479,7 +478,7 @@ public class TestesUnitariosAutomaticos {
     }
 
     @Test
-    public void  testeMover(){
+    public void  testeMoverComCicloInfinito(){
         int tabuleiro=6;
         GameManager manager=new GameManager();
         String[][] jogadoresValidos = new String[2][4];

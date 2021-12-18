@@ -11,12 +11,18 @@ public class Programmer {
     private ProgrammerColor cor;
     private String estado = "Em Jogo";
     private int posicao = 1;
-    private String linguegnsFavoritas;
+    private String linguagensFavoritas;
     private ArrayList<AbismoOrFerramenta> ferramentas = new ArrayList<>();
     private boolean stuck = false;
     private int posicaoAnterior = 1;
     private int posicao2Anterior = 1;
 
+    public Programmer(int id, String nome, ProgrammerColor cor, String linguagensFavoritas) {
+        this.id = id;
+        this.nome = nome;
+        this.cor = cor;
+        this.linguagensFavoritas = linguagensFavoritas;
+    }
 
     public ArrayList<AbismoOrFerramenta> getFerramentas() {
         return ferramentas;
@@ -46,11 +52,42 @@ public class Programmer {
         return stuck;
     }
 
-    public Programmer(int id, String nome, ProgrammerColor cor, String linguegnsFavoritas) {
-        this.id = id;
-        this.nome = nome;
-        this.cor = cor;
-        this.linguegnsFavoritas = linguegnsFavoritas;
+    public int getId() {
+        return id;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public String getName() {
+        return nome;
+    }
+
+    public int getPosicao() {
+        return posicao;
+    }
+
+    public ProgrammerColor getColor() {
+        return cor;
+    }
+
+    public String getProgrammersInfo() {
+
+        StringBuilder info = new StringBuilder(nome + " : ");
+        if (ferramentas.size() == 0) {
+            info.append("No tools");
+        } else {
+            for (int i = 0; i < ferramentas.size(); i++) {
+                if (i == ferramentas.size() - 1) {
+                    info.append(ferramentas.get(i));
+                } else {
+                    info.append(ferramentas.get(i)).append(";");
+                }
+            }
+        }
+        return info.toString();
+
     }
 
     public boolean adicionaFerramenta(AbismoOrFerramenta ferramenta) {
@@ -81,23 +118,7 @@ public class Programmer {
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public String getName() {
-        return nome;
-    }
-
-    public int getPosicao() {
-        return posicao;
-    }
-
-    void mover(int dado, int tamanhoTabuleiro) {
+    public void mover(int dado, int tamanhoTabuleiro) {
         posicao2Anterior = posicaoAnterior;
         posicaoAnterior = posicao;
 
@@ -111,31 +132,10 @@ public class Programmer {
         }
     }
 
-    public String getProggramesInfo() {
-
-        StringBuilder info = new StringBuilder(nome + " : ");
-        if (ferramentas.size() == 0) {
-            info.append("No tools");
-        } else {
-            for (int i = 0; i < ferramentas.size(); i++) {
-                if (i == ferramentas.size() - 1) {
-                    info.append(ferramentas.get(i));
-                } else {
-                    info.append(ferramentas.get(i)).append(";");
-                }
-            }
-        }
-        return info.toString();
-
-    }
-
-    public ProgrammerColor getColor() {
-        return cor;
-    }
 
     @Override
     public String toString() {
-        ArrayList<String> linguagensList = new ArrayList<>(Arrays.asList(linguegnsFavoritas.split(";")));
+        ArrayList<String> linguagensList = new ArrayList<>(Arrays.asList(linguagensFavoritas.split(";")));
         linguagensList.sort(String::compareTo);
         StringBuilder linguagensString = new StringBuilder();
         StringBuilder ferramentasString = new StringBuilder();
