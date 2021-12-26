@@ -1,3 +1,5 @@
+
+
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import org.junit.Test;
@@ -62,6 +64,24 @@ public class TestesUnitariosAutomaticos {
 
     }
 
+    @Test
+    public void test() {
+        String[][] abyssesAndToolsInvalidaFerramentaIDInvalidoMaior = criaAbyssesAndTools();
+        abyssesAndToolsInvalidaFerramentaIDInvalidoMaior[15][1] = "99";
+        String[][] jogadoresValidos = criarJogadores();
+        String mensagem = "ID ferramenta invalido";
+        int tamanhoTabuleiro = 20;
+        GameManager manager = new GameManager();
+        try {
+            manager.createInitialBoard(jogadoresValidos, tamanhoTabuleiro, abyssesAndToolsInvalidaFerramentaIDInvalidoMaior);
+            fail("Deveria ter lançado uma exception");
+        } catch (Exception ex) {
+            assertEquals(mensagem, ex.getMessage());
+        }
+    }
+
+}
+/*
     @Test
     public void testeAbismosIDeTituloEID() {
         GameManager manager = new GameManager();
@@ -651,3 +671,5 @@ public class TestesUnitariosAutomaticos {
 
     }
 }
+
+*/

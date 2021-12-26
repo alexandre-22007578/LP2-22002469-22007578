@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.*;
 
 public class GameManager {
@@ -8,8 +9,8 @@ public class GameManager {
     private int tamanhoTabuleiro;
     private int playerAtual;
     private int numeroTotalDeTurnos;
-    private  ArrayList<Programmer> players = new ArrayList<>();
-    private  HashMap<Integer, AbismoOrFerramenta> abismosEFerramentas = new HashMap<>();
+    private ArrayList<Programmer> players = new ArrayList<>();
+    private HashMap<Integer, AbismoOrFerramenta> abismosEFerramentas = new HashMap<>();
 
 
     public GameManager() {
@@ -51,7 +52,7 @@ public class GameManager {
         }
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
+    public void createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
         numeroTotalDeTurnos = 1;
         players.clear();
         int id;
@@ -63,34 +64,25 @@ public class GameManager {
         playerAtual = 0;
 
         if (worldSize < playerInfo.length * 2 || playerInfo.length < 2 || playerInfo.length > 4) {
-            return false;
+            throw new InvalidInitialBoardException("Tamanho so tabuleiro ou numero de jogadores inválidos", 0, -1);
         }
         try {
             for (String[] strings : playerInfo) {
                 id = Integer.parseInt(String.valueOf(strings[0]));
                 if (strings[1] == null || strings[1].equals("")) {
-                    return false;
+                    throw new InvalidInitialBoardException("Nome do jogador inválido", 0, -1);
                 }
                 nome = strings[1];
                 linguagensProgramacao = String.valueOf(strings[2]);
-                switch (strings[3]) {
-                    case "Purple":
-                        color = ProgrammerColor.PURPLE;
-                        break;
-                    case "Green":
-                        color = ProgrammerColor.GREEN;
-                        break;
-                    case "Brown":
-                        color = ProgrammerColor.BROWN;
-                        break;
-                    case "Blue":
-                        color = ProgrammerColor.BLUE;
-                        break;
-                    default:
-                        return false;
-                }
+                color = switch (strings[3]) {
+                    case "Purple" -> ProgrammerColor.PURPLE;
+                    case "Green" -> ProgrammerColor.GREEN;
+                    case "Brown" -> ProgrammerColor.BROWN;
+                    case "Blue" -> ProgrammerColor.BLUE;
+                    default -> throw new InvalidInitialBoardException("Cor do jogador invalido", 0, -1);
+                };
                 if (id < 1 || !(ids.add(id)) || !(cores.add(color))) {
-                    return false;
+                    throw new InvalidInitialBoardException("Id invalido ou repetido ou cor repetida", 0, -1);
                 }
                 players.add(new Programmer(id, nome, color, linguagensProgramacao));
 
@@ -98,19 +90,26 @@ public class GameManager {
             }
             this.tamanhoTabuleiro = worldSize;
         } catch (Exception e) {
-            return false;
+
+            if (e.getMessage() == null) {
+                throw new InvalidInitialBoardException("Parametros fora do tipo  de variável pedida", 0, -1);
+            } else {
+                throw e;
+            }
+
         }
 
         players.sort(Comparator.comparingInt(Programmer::getId));
-        return true;
+
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+    public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
 
         abismosEFerramentas.clear();
         int abismoOrFerramenta;
-        int id;
+        int id ;
         int posicao;
+
         try {
 
             for (String[] abyssesAndTool : abyssesAndTools) {
@@ -119,15 +118,16 @@ public class GameManager {
                 id = Integer.parseInt(String.valueOf(abyssesAndTool[1]));
 
                 if (posicao > worldSize || posicao < 0) { // check posicao
-                    return false;
+                    throw new InvalidInitialBoardException("posicao errada", 0, -1);
                 }
                 if (abismoOrFerramenta != 0 && abismoOrFerramenta != 1) { // check abismo ou ferramenta
-                    return false;
+                    throw new InvalidInitialBoardException("identificador de ferramenta ou abismo inválido", 0, -1);
                 }
 
                 if (abismoOrFerramenta == 0) {
                     if (id < 0 || id > 9) { // check  id abismos
-                        return false;
+
+                        throw new InvalidInitialBoardException("ID abismo invalido", 1, id);
                     }
 
                     createAbismoEAdiciona(id, posicao);
@@ -135,17 +135,23 @@ public class GameManager {
                 }
                 if (abismoOrFerramenta == 1) {
                     if (id < 0 || id > 5) { // check  id ferramenta
-                        return false;
+
+                        throw new InvalidInitialBoardException("ID ferramenta invalido", 2, id);
+
                     }
                     createFerramentaEAdiciona(id, posicao);
                 }
             }
         } catch (Exception e) {
-            return false;
+            if (e.getMessage() == null) {
+                throw new InvalidInitialBoardException("Parametros fora do tipo  de variável pedida", 0, -1);
+            } else {
+                throw e;
+            }
         }
 
 
-        return createInitialBoard(playerInfo, worldSize);
+        createInitialBoard(playerInfo, worldSize);
     }
 
     public String getTitle(int position) {
@@ -229,11 +235,11 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
-        String estado=players.get(playerAtual).getEstado();
+        String estado = players.get(playerAtual).getEstado();
 
-        if (estado.equals("Derrotado") ) {
+        if (estado.equals("Derrotado")) {
 
-            if (playerAtual == players.size()-1) {
+            if (playerAtual == players.size() - 1) {
                 playerAtual = 0;
             } else {
                 playerAtual++;
@@ -291,7 +297,7 @@ public class GameManager {
                     break;
                 }
             }
-            String resulado =  abismosEFerramentas.get(players.get(playerAtual).getPosicao()).move(dado, players.get(playerAtual), tamanhoTabuleiro, daCounter,players);
+            String resulado = abismosEFerramentas.get(players.get(playerAtual).getPosicao()).move(dado, players.get(playerAtual), tamanhoTabuleiro, daCounter, players);
 
             mudaTurno();
             return resulado;
@@ -343,7 +349,7 @@ public class GameManager {
         creditos.setSize(300, 300);
         ArrayList<JLabel> labels = new ArrayList<>();
 
-        labels.add(new JLabel("Parte 2 do projeto de LP2\n"));
+        labels.add(new JLabel("Parte 3 do projeto de LP2\n"));
         labels.add(new JLabel("                                                                  "));
         labels.add(new JLabel("Programadores do DEISI GREAT GAME:"));
         labels.add(new JLabel("              Alexandre Costa            "));
@@ -362,6 +368,16 @@ public class GameManager {
 
         return creditos;
     }
+
+
+    public boolean saveGame(File file){
+        return true;
+    }
+
+    public boolean loadGame(File file){
+        return true;
+    }
+
 
 
 }
