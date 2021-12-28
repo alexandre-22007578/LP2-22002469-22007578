@@ -2,8 +2,8 @@ package pt.ulusofona.lp2.deisiGreatGame
 
 enum class CommandType { GET, POST }
 
-fun router():(CommandType) -> String {
-return {""}
+fun router(): ((CommandType) -> (GameManager, List<String>) -> String)? {
+return null
 }
 
 
