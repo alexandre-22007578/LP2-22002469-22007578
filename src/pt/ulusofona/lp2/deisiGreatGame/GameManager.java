@@ -89,7 +89,7 @@ public class GameManager {
 
             }
             this.tamanhoTabuleiro = worldSize;
-        } catch (Exception e) {
+        } catch (InvalidInitialBoardException e) {
 
             if (e.getMessage() == null) {
                 throw new InvalidInitialBoardException("Parametros fora do tipo  de variável pedida", 0, -1);
@@ -142,7 +142,7 @@ public class GameManager {
                     createFerramentaEAdiciona(id, posicao);
                 }
             }
-        } catch (Exception e) {
+        } catch (InvalidInitialBoardException e) {
             if (e.getMessage() == null) {
                 throw new InvalidInitialBoardException("Parametros fora do tipo  de variável pedida", 0, -1);
             } else {
