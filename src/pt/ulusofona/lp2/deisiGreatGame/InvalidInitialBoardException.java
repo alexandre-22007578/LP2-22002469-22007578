@@ -30,9 +30,9 @@ public class InvalidInitialBoardException extends Exception {
         return id==2;
     }
 
-    public int getTypeId() throws  Exception{
+    public String getTypeId() throws  Exception{
         if (erro==1 || erro==2){
-            return id;
+            return id+"";
         }
       throw new Exception("Erro nao foi causado nem por uma ferramenta nem por um abismo");
     }
