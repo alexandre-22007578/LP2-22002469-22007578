@@ -53,22 +53,75 @@ public class GameManager {
     }
 
     public void createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
+
+         createInitialBoard(playerInfo,worldSize,null);
+
+    }
+
+    public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
+
+        abismosEFerramentas.clear();
+        int abismoOrFerramenta;
+        int id;
+        int posicao;
         numeroTotalDeTurnos = 1;
         players.clear();
-        int id;
+        int idPlayer;
         String nome;
         ProgrammerColor color;
         String linguagensProgramacao;
         HashSet<Integer> ids = new HashSet<>();
         HashSet<ProgrammerColor> cores = new HashSet<>();
         playerAtual = 0;
+        if (abyssesAndTools != null) {
+            try {
+
+                for (String[] abyssesAndTool : abyssesAndTools) {
+                    abismoOrFerramenta = Integer.parseInt(String.valueOf(abyssesAndTool[0]));
+                    posicao = Integer.parseInt(String.valueOf(abyssesAndTool[2]));
+                    id = Integer.parseInt(String.valueOf(abyssesAndTool[1]));
+
+                    if (posicao > worldSize || posicao < 0) { // check posicao
+                        throw new InvalidInitialBoardException("posicao errada", 0, -1);
+                    }
+                    if (abismoOrFerramenta != 0 && abismoOrFerramenta != 1) { // check abismo ou ferramenta
+                        throw new InvalidInitialBoardException("identificador de ferramenta ou abismo inválido", 0, -1);
+                    }
+
+                    if (abismoOrFerramenta == 0) {
+                        if (id < 0 || id > 9) { // check  id abismos
+
+                            throw new InvalidInitialBoardException("ID abismo invalido", 1, id);
+                        }
+
+                        createAbismoEAdiciona(id, posicao);
+
+                    }
+                    if (abismoOrFerramenta == 1) {
+                        if (id < 0 || id > 5) { // check  id ferramenta
+
+                            throw new InvalidInitialBoardException("ID ferramenta invalido", 2, id);
+
+                        }
+                        createFerramentaEAdiciona(id, posicao);
+                    }
+                }
+            } catch (InvalidInitialBoardException e) {
+                if (e.getMessage() == null) {
+                    throw new InvalidInitialBoardException("Parametros fora do tipo  de variável pedida", 0, -1);
+                } else {
+                    throw e;
+                }
+            }
+        }
+
 
         if (worldSize < playerInfo.length * 2 || playerInfo.length < 2 || playerInfo.length > 4) {
             throw new InvalidInitialBoardException("Tamanho so tabuleiro ou numero de jogadores inválidos", 0, -1);
         }
         try {
             for (String[] strings : playerInfo) {
-                id = Integer.parseInt(String.valueOf(strings[0]));
+                idPlayer = Integer.parseInt(String.valueOf(strings[0]));
                 if (strings[1] == null || strings[1].equals("")) {
                     throw new InvalidInitialBoardException("Nome do jogador inválido", 0, -1);
                 }
@@ -81,10 +134,10 @@ public class GameManager {
                     case "Blue" -> ProgrammerColor.BLUE;
                     default -> throw new InvalidInitialBoardException("Cor do jogador invalido", 0, -1);
                 };
-                if (id < 1 || !(ids.add(id)) || !(cores.add(color))) {
+                if (idPlayer < 1 || !(ids.add(idPlayer)) || !(cores.add(color))) {
                     throw new InvalidInitialBoardException("Id invalido ou repetido ou cor repetida", 0, -1);
                 }
-                players.add(new Programmer(id, nome, color, linguagensProgramacao));
+                players.add(new Programmer(idPlayer, nome, color, linguagensProgramacao));
 
 
             }
@@ -101,57 +154,7 @@ public class GameManager {
 
         players.sort(Comparator.comparingInt(Programmer::getId));
 
-    }
 
-    public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
-
-        abismosEFerramentas.clear();
-        int abismoOrFerramenta;
-        int id ;
-        int posicao;
-
-        try {
-
-            for (String[] abyssesAndTool : abyssesAndTools) {
-                abismoOrFerramenta = Integer.parseInt(String.valueOf(abyssesAndTool[0]));
-                posicao = Integer.parseInt(String.valueOf(abyssesAndTool[2]));
-                id = Integer.parseInt(String.valueOf(abyssesAndTool[1]));
-
-                if (posicao > worldSize || posicao < 0) { // check posicao
-                    throw new InvalidInitialBoardException("posicao errada", 0, -1);
-                }
-                if (abismoOrFerramenta != 0 && abismoOrFerramenta != 1) { // check abismo ou ferramenta
-                    throw new InvalidInitialBoardException("identificador de ferramenta ou abismo inválido", 0, -1);
-                }
-
-                if (abismoOrFerramenta == 0) {
-                    if (id < 0 || id > 9) { // check  id abismos
-
-                        throw new InvalidInitialBoardException("ID abismo invalido", 1, id);
-                    }
-
-                    createAbismoEAdiciona(id, posicao);
-
-                }
-                if (abismoOrFerramenta == 1) {
-                    if (id < 0 || id > 5) { // check  id ferramenta
-
-                        throw new InvalidInitialBoardException("ID ferramenta invalido", 2, id);
-
-                    }
-                    createFerramentaEAdiciona(id, posicao);
-                }
-            }
-        } catch (InvalidInitialBoardException e) {
-            if (e.getMessage() == null) {
-                throw new InvalidInitialBoardException("Parametros fora do tipo  de variável pedida", 0, -1);
-            } else {
-                throw e;
-            }
-        }
-
-
-        createInitialBoard(playerInfo, worldSize);
     }
 
     public String getTitle(int position) {
@@ -370,14 +373,14 @@ public class GameManager {
     }
 
 
-    public boolean saveGame(File file){
+    public boolean saveGame(File file) {
 
-        try{
+        try {
 
-            FileWriter writer=new FileWriter(file);
-            PrintWriter print=new PrintWriter(writer);
+            FileWriter writer = new FileWriter(file);
+            PrintWriter print = new PrintWriter(writer);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
 
@@ -385,19 +388,18 @@ public class GameManager {
         return true;
     }
 
-    public boolean loadGame(File file){
+    public boolean loadGame(File file) {
 
-        try{
+        try {
 
-            FileReader reader=new FileReader(file);
-            BufferedReader buffered=new BufferedReader(reader);
+            FileReader reader = new FileReader(file);
+            BufferedReader buffered = new BufferedReader(reader);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
-
 
 
 }
