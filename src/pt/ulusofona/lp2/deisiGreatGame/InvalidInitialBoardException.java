@@ -34,7 +34,7 @@ public class InvalidInitialBoardException extends Exception {
         if (erro==1 || erro==2){
             return id;
         }
-     return 0;
+     return Integer.MIN_VALUE;
     }
 
 }
