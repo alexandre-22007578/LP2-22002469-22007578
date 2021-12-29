@@ -31,6 +31,12 @@ public class InvalidInitialBoardException extends Exception {
     }
 
     public String getTypeId() throws  Exception{
+
+
+
+
+
+
         if (erro==1 || erro==2){
             return id+"";
         }
