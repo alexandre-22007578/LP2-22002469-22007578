@@ -1,7 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import javax.swing.*;
-import java.io.File;
+import java.io.*;
 import java.util.*;
 
 public class GameManager {
@@ -371,10 +371,30 @@ public class GameManager {
 
 
     public boolean saveGame(File file){
+
+        try{
+
+            FileWriter writer=new FileWriter(file);
+            PrintWriter print=new PrintWriter(writer);
+
+        }catch (Exception e){
+            return false;
+        }
+
+
         return true;
     }
 
     public boolean loadGame(File file){
+
+        try{
+
+            FileReader reader=new FileReader(file);
+            BufferedReader buffered=new BufferedReader(reader);
+
+        }catch (Exception e){
+            return false;
+        }
         return true;
     }
 
