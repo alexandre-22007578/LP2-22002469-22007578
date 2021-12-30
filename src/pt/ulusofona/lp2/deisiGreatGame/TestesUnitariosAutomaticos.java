@@ -29,7 +29,7 @@ public class TestesUnitariosAutomaticos {
 
         // linguagens programação
         jogadores[0][2] = "Java";
-        jogadores[1][2] = "C;C++";
+        jogadores[1][2] = "C;C++;Java";
         jogadores[2][2] = "Ruby";
         jogadores[3][2] = "kotlin";
 
@@ -101,7 +101,8 @@ public class TestesUnitariosAutomaticos {
 
 
 
-        assertEquals("[1 | Alexandre | 1 | No tools | Java | Em Jogo]",FunctionsKt.playerFirstName(manager,teste));
+
+        assertEquals("1 | Alexandre | 1 | No tools | Java | Em Jogo",FunctionsKt.playerFirstName(manager,teste));
 
 
 

@@ -125,6 +125,7 @@ public class GameManager {
                 if (strings[1] == null || strings[1].equals("")) {
                     throw new InvalidInitialBoardException("Nome do jogador inválido", 0, -1);
                 }
+
                 nome = strings[1];
                 linguagensProgramacao = String.valueOf(strings[2]);
                 color = switch (strings[3]) {
@@ -137,7 +138,8 @@ public class GameManager {
                 if (idPlayer < 1 || !(ids.add(idPlayer)) || !(cores.add(color))) {
                     throw new InvalidInitialBoardException("Id invalido ou repetido ou cor repetida", 0, -1);
                 }
-                players.add(new Programmer(idPlayer, nome, color, linguagensProgramacao));
+                Programmer programmer = new Programmer(idPlayer, nome, color, linguagensProgramacao);
+                players.add(programmer);
 
 
             }

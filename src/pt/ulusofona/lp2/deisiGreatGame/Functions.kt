@@ -20,7 +20,10 @@ fun getters(gameManager: GameManager, list: List<String>): String? {
 
     return when(list[0]){
         "PLAYER"->playerFirstName(gameManager, list)
+        "POLYGLOTS" ->polyglots(gameManager)
+        "PLAYERS_BY_LANGUAGE" ->playerByLanguage(gameManager, list)
         else -> return null
+
     }
 
 
@@ -29,11 +32,26 @@ fun getters(gameManager: GameManager, list: List<String>): String? {
 fun playerFirstName(gameManager: GameManager, list: List<String>): String{
     val jogadores=gameManager.getProgrammers(true)
     val nome=list[1]
-    return jogadores.filter { it.name==nome }.toString()
+    val resultado = jogadores.filter { it.name==nome }
+    if (resultado.isEmpty()){
+        return "Inexistent player"
+    }
+    return resultado.toString().replace("[", "").replace("]", "")
+
+}
+fun playerByLanguage(gameManager: GameManager, list: List<String>): String{
+    val jogadores=gameManager.getProgrammers(true)
+    val linguagem=list[1]
+    return jogadores.filter { it.linguagensList.contains(linguagem) }.map { it.nome }.toString()
 
 }
 
-
+fun polyglots(gameManager: GameManager): String{
+    var resultado = ""
+    val jogadores=gameManager.getProgrammers(true)
+    jogadores.filter { it.linguagensList.size >= 2}.sortedWith{j1, j2 -> j1.linguagensList.size - j2.linguagensList.size }.forEach{resultado+=it.nome + ":" + it.linguagensList.size +"\n"}
+    return resultado
+}
 
 
 

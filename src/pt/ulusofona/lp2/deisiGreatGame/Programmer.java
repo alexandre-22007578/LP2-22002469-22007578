@@ -17,11 +17,22 @@ public class Programmer {
     private int posicaoAnterior = 1;
     private int posicao2Anterior = 1;
 
+    public String getNome() {
+        return nome;
+    }
+
+    public ArrayList<String> getLinguagensList() {
+        return linguagensList;
+    }
+
+    private ArrayList<String> linguagensList;
+
     public Programmer(int id, String nome, ProgrammerColor cor, String linguagensFavoritas) {
         this.id = id;
         this.nome = nome;
         this.cor = cor;
         this.linguagensFavoritas = linguagensFavoritas;
+        this.linguagensList = new ArrayList<>(Arrays.asList(linguagensFavoritas.split(";")));
     }
 
     public ArrayList<AbismoOrFerramenta> getFerramentas() {
@@ -135,7 +146,6 @@ public class Programmer {
 
     @Override
     public String toString() {
-        ArrayList<String> linguagensList = new ArrayList<>(Arrays.asList(linguagensFavoritas.split(";")));
         linguagensList.sort(String::compareTo);
         StringBuilder linguagensString = new StringBuilder();
         StringBuilder ferramentasString = new StringBuilder();
