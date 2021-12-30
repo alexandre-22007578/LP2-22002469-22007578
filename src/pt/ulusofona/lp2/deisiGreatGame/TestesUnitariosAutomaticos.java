@@ -101,8 +101,9 @@ public class TestesUnitariosAutomaticos {
 
 
 
-
+        FunctionsKt.polyglots(manager);
         assertEquals("1 | Alexandre | 1 | No tools | Java | Em Jogo",FunctionsKt.playerFirstName(manager,teste));
+
 
 
 
