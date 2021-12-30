@@ -5,6 +5,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import org.junit.Test;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,6 +79,33 @@ public class TestesUnitariosAutomaticos {
         } catch (Exception ex) {
             assertEquals(mensagem, ex.getMessage());
         }
+    }
+
+
+    @Test
+    public void testePlayerFirstName(){
+        String[][] abismosEFerramentas = criaAbyssesAndTools();
+        String[][] jogadoresValidos = criarJogadores();
+
+        int tamanhoTabuleiro = 20;
+        GameManager manager = new GameManager();
+        try {
+            manager.createInitialBoard(jogadoresValidos, tamanhoTabuleiro, abismosEFerramentas);
+
+        } catch (Exception ex) {
+            assertEquals("erro", ex.getMessage());
+        }
+        ArrayList<String > teste=new ArrayList<>();
+        teste.add("PLAYER");
+        teste.add("Alexandre");
+
+
+
+        assertEquals("[1 | Alexandre | 1 | No tools | Java | Em Jogo]",FunctionsKt.playerFirstName(manager,teste));
+
+
+
+
     }
 
 }
