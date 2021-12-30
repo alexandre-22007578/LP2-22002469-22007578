@@ -2,31 +2,24 @@ package pt.ulusofona.lp2.deisiGreatGame
 
 enum class CommandType { GET, POST }
 
-fun router(): ((CommandType) -> (GameManager, List<String>) -> String)? {
-return null
+fun router(): (CommandType) -> (GameManager, List<String>) -> String? {
+    return ::teste
 }
 
 
-
-
-
-fun getPlayer(manager: GameManager, args: List<String>): String? {
-
-    when (args[0]) {
-        "PLAYER" -> return player()
-        "PLAYERS_BY_LANGUAGE"->return  PLAYERS_BY_LANGUAGE()
+fun teste(type: CommandType): (GameManager, List<String>) -> String? {
+    return if (type==CommandType.GET){
+        ::getters
+    }else {
+        ::postters
     }
-    return null
+
 }
 
-fun PLAYERS_BY_LANGUAGE(): String {
+fun getters(gameManager: GameManager,list: List<String>):String?{
     return ""
 }
 
-fun player(): String {
+fun postters(gameManager: GameManager,list: List<String>):String?{
     return ""
-}
-
-fun getFunction() {
-
 }
