@@ -49,7 +49,7 @@ fun playerByLanguage(gameManager: GameManager, list: List<String>): String{
 fun polyglots(gameManager: GameManager): String{
     val resultado: String
     val jogadores=gameManager.getProgrammers(true)
-    resultado = jogadores.filter { it.linguagensList.size >= 2 }.sortedWith{j1, j2 -> j1.linguagensList.size - j2.linguagensList.size }.joinToString ("\n" ){it.nome+ " : " + it.linguagensList.size}
+    resultado = jogadores.filter { it.linguagensList.size >= 2 }.sortedWith{j1, j2 -> j1.linguagensList.size - j2.linguagensList.size }.joinToString ("\n" ){it.nome+ ":" + it.linguagensList.size}
     return resultado
 }
 
