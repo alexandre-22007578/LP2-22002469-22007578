@@ -15,7 +15,8 @@ fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
     }
     return null
 }
-// comite testeas
+// t
+// reste do commit e update
 
 
 
