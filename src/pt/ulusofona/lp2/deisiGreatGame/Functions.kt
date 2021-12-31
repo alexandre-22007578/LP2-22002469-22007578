@@ -15,7 +15,9 @@ fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
     }
 return null
 }
-// comite teste
+// comite testeas
+
+
 
 fun getters(gameManager: GameManager, list: List<String>): String? {
 
