@@ -9,11 +9,11 @@ fun router(): (CommandType) -> ((GameManager, List<String>) -> String?)? {
 
 fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
     if (type == CommandType.GET) {
-       return ::getters
+        return ::getters
     } else if (type == CommandType.POST) {
         return ::postters
     }
-return null
+    return null
 }
 // comite testeas
 
