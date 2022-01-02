@@ -87,7 +87,6 @@ fun mostUsedPositions(gameManager: GameManager, list: List<String>): String {
 
     resultado = ola.take(list[1].toInt()).joinToString("\n") { "" + it.first + ":" + it.second }
     return resultado
-    //
 }
 
 
