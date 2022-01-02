@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Exceptionn extends AbismoOrFerramenta {// O programador recua 2 casa
 
+
     public Exceptionn(int id) {
         super(id);
         titulo = "Exception";

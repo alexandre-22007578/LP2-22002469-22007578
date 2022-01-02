@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class ErroDeLogica extends AbismoOrFerramenta{// O programador recua N casas, sendo N metade do valor que tiver saído no dado, arredondado para baixo.
 
+
     public ErroDeLogica(int id) {
         super(id);
         titulo="Erro de lógica";

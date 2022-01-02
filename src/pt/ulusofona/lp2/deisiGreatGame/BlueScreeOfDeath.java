@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class BlueScreeOfDeath extends AbismoOrFerramenta {//O programador perde imediatamente o jogo
 
+
     public BlueScreeOfDeath(int id) {
         super(id);
         titulo = "Blue Screen of Death";

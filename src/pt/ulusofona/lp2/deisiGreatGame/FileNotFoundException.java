@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import java.util.ArrayList;
 
 public class FileNotFoundException extends AbismoOrFerramenta{// O programador recua 3 casa
+
     public FileNotFoundException(int id) {
         super(id);
         titulo="File Not Found Exception";

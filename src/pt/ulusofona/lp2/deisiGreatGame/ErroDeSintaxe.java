@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class ErroDeSintaxe extends AbismoOrFerramenta { // O programador recua 1 casa
 
+
     public ErroDeSintaxe(int id) {
         super(id);
         titulo = "Erro de sintaxe";

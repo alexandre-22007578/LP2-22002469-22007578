@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import java.util.ArrayList;
 
 public class DuplicatedCode extends AbismoOrFerramenta{// O programador recua até à casa onde estava antes de chegar a esta casa
+
     public DuplicatedCode(int id) {
         super(id);
         titulo="Duplicated Code";
