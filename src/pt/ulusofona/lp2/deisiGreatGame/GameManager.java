@@ -33,16 +33,56 @@ public class GameManager {
 
 
         switch (id) {
-            case 0 -> abismosEFerramentas.put(posicao, new ErroDeSintaxe(id));
-            case 1 -> abismosEFerramentas.put(posicao, new ErroDeLogica(id));
-            case 2 -> abismosEFerramentas.put(posicao, new Exceptionn(id));
-            case 3 -> abismosEFerramentas.put(posicao, new FileNotFoundException(id));
-            case 4 -> abismosEFerramentas.put(posicao, new CrashAkaRebentanco(id));
-            case 5 -> abismosEFerramentas.put(posicao, new DuplicatedCode(id));
-            case 6 -> abismosEFerramentas.put(posicao, new EfeitosSecundarios(id));
-            case 7 -> abismosEFerramentas.put(posicao, new BlueScreeOfDeath(id));
-            case 8 -> abismosEFerramentas.put(posicao, new CicloInfinito(id));
-            case 9 -> abismosEFerramentas.put(posicao, new SegmentationFault(id));
+            case 0 -> {
+                ErroDeSintaxe erroDeSintaxe = new ErroDeSintaxe(id);
+                abismosEFerramentas.put(posicao, erroDeSintaxe);
+                abismosPisadas.put(erroDeSintaxe.getTitulo(), 0);
+            }
+            case 1 -> {
+                ErroDeLogica erroDeLogica = new ErroDeLogica(id);
+                abismosEFerramentas.put(posicao, erroDeLogica);
+                abismosPisadas.put(erroDeLogica.getTitulo(), 0);
+            }
+            case 2 -> {
+                Exceptionn exceptionn = new Exceptionn(id);
+                abismosEFerramentas.put(posicao, exceptionn);
+                abismosPisadas.put(exceptionn.getTitulo(), 0);
+            }
+            case 3 -> {
+                FileNotFoundException fileNotFoundException = new FileNotFoundException(id);
+                abismosEFerramentas.put(posicao, fileNotFoundException);
+                abismosPisadas.put(fileNotFoundException.getTitulo(), 0);
+            }
+            case 4 -> {
+                CrashAkaRebentanco crashAkaRebentanco = new CrashAkaRebentanco(id);
+                abismosEFerramentas.put(posicao, crashAkaRebentanco);
+                abismosPisadas.put(crashAkaRebentanco.getTitulo(), 0);
+            }
+            case 5 -> {
+                DuplicatedCode duplicatedCode = new DuplicatedCode(id);
+                abismosEFerramentas.put(posicao, new DuplicatedCode(id));
+                abismosPisadas.put(duplicatedCode.getTitulo(), 0);
+            }
+            case 6 -> {
+                EfeitosSecundarios efeitosSecundarios = new EfeitosSecundarios(id);
+                abismosEFerramentas.put(posicao, efeitosSecundarios);
+                abismosPisadas.put(efeitosSecundarios.getTitulo(), 0);
+            }
+            case 7 -> {
+                BlueScreeOfDeath blueScreeOfDeath = new BlueScreeOfDeath(id);
+                abismosEFerramentas.put(posicao, blueScreeOfDeath);
+                abismosPisadas.put(blueScreeOfDeath.getTitulo(), 0);
+            }
+            case 8 -> {
+                CicloInfinito cicloInfinito = new CicloInfinito(id);
+                abismosEFerramentas.put(posicao, cicloInfinito);
+                abismosPisadas.put(cicloInfinito.getTitulo(), 0);
+            }
+            case 9 -> {
+                SegmentationFault segmentationFault = new SegmentationFault(id);
+                abismosEFerramentas.put(posicao, segmentationFault);
+                abismosPisadas.put(segmentationFault.getTitulo(), 0);
+            }
 
 
         }
@@ -280,15 +320,13 @@ public class GameManager {
         }
 
 
-
-
         players.get(playerAtual).mover(nrSpaces, tamanhoTabuleiro);
 
         // casas pisadas
         if (casasPisadas.containsKey(players.get(playerAtual).getPosicao())) {
-            nrPisadelas = casasPisadas.get(players.get(playerAtual).getPosicao())+1;
+            nrPisadelas = casasPisadas.get(players.get(playerAtual).getPosicao()) + 1;
 
-            casasPisadas.put(players.get(playerAtual).getPosicao(), nrPisadelas );
+            casasPisadas.put(players.get(playerAtual).getPosicao(), nrPisadelas);
         } else {
             casasPisadas.put(players.get(playerAtual).getPosicao(), 1);
         }
@@ -301,8 +339,6 @@ public class GameManager {
                 if (abismosPisadas.containsKey(titulo)) {
                     int pisadas = abismosPisadas.get(titulo) + 1;
                     abismosPisadas.put(titulo, pisadas);
-                } else {
-                    abismosPisadas.put(titulo, 1);
                 }
             }
         }
