@@ -27,6 +27,7 @@ fun getters(gameManager: GameManager, list: List<String>): String? {
         "PLAYER"->playerFirstName(gameManager, list)
         "POLYGLOTS" ->polyglots(gameManager)
         "PLAYERS_BY_LANGUAGE" ->playerByLanguage(gameManager, list)
+        "MOST_USED_POSITIONS" -> mostUsedPositions(gameManager,list)
         else -> return null
 
     }
@@ -58,7 +59,14 @@ fun polyglots(gameManager: GameManager): String{
     return resultado
 }
 
+fun mostUsedPositions(gameManager: GameManager, list: List<String>):String{
+    val jogadores=gameManager.getProgrammers(true)
+    val resultado: String
+    val ola = gameManager.casasPisadas.toList().sortedBy { (_, value) -> value}.reversed()
 
+    resultado = ola.take(list[1].toInt()).joinToString ( "\n") {"" +it.first + ":" + it.second}
+    return resultado
+}
 
 fun postters(gameManager: GameManager, list: List<String>): String? {
     return ""

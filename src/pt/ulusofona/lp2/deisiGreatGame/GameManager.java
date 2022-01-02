@@ -11,7 +11,11 @@ public class GameManager {
     private int numeroTotalDeTurnos;
     private ArrayList<Programmer> players = new ArrayList<>();
     private HashMap<Integer, AbismoOrFerramenta> abismosEFerramentas = new HashMap<>();
+    private HashMap<Integer, Integer> casasPisadas = new HashMap<>();
 
+    public HashMap<Integer, Integer> getCasasPisadas() {
+        return casasPisadas;
+    }
 
     public GameManager() {
     }
@@ -255,8 +259,9 @@ public class GameManager {
 
     }
 
-    public boolean moveCurrentPlayer(int nrSpaces) {
 
+    public boolean moveCurrentPlayer(int nrSpaces) {
+        int nrPisadelas;
         dado = nrSpaces;
         if (nrSpaces < 1 || nrSpaces > 6) {
             return false;
@@ -267,6 +272,14 @@ public class GameManager {
                 return false;
             }
         }
+
+       if (casasPisadas.containsKey(players.get(playerAtual).getPosicao())){
+          nrPisadelas= casasPisadas.get(players.get(playerAtual).getPosicao());
+
+           casasPisadas.put(players.get(playerAtual).getPosicao(),nrPisadelas+1);
+       }else {
+           casasPisadas.put(players.get(playerAtual).getPosicao(),1);
+       }
 
         players.get(playerAtual).mover(nrSpaces, tamanhoTabuleiro);
 
