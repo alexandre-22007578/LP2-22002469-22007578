@@ -66,8 +66,7 @@ fun playerFirstName(gameManager: GameManager, list: List<String>): String {
 fun playerByLanguage(gameManager: GameManager, list: List<String>): String {
     val jogadores = gameManager.getProgrammers(true)
     val linguagem = list[1]
-    return jogadores.filter { it.linguagensList.contains(linguagem) }.map { it.nome.trim() }.toString().replace("[", "")
-        .replace("]", "")
+    return jogadores.filter { it.linguagensList.contains(linguagem) }.joinToString (","){it.name}
 
 }
 
