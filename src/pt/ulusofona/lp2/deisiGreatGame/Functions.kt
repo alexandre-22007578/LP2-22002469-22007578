@@ -23,6 +23,7 @@ fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
 fun postters(gameManager: GameManager, list: List<String>): String? {
     return when (list[0]) {
         "ola" -> return "ola"
+
         else -> return null
 
     }
