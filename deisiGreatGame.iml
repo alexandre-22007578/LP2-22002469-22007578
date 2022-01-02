@@ -2,14 +2,9 @@
 <module type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="5" platform="JVM 1.8" allPlatforms="JVM [1.8]">
+      <configuration version="4" platform="JVM 1.8" allPlatforms="JVM [1.8]">
         <compilerSettings />
-        <compilerArguments>
-          <stringArguments>
-            <stringArg name="apiVersion" arg="1.6" />
-            <stringArg name="languageVersion" arg="1.6" />
-          </stringArguments>
-        </compilerArguments>
+        <compilerArguments />
       </configuration>
     </facet>
   </component>
@@ -21,6 +16,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
+    <orderEntry type="library" name="LP2-GuiViewer2122-p3-1.0.2 (2)" level="project" />
     <orderEntry type="module-library">
       <library name="JUnit4">
         <CLASSES>
@@ -31,6 +27,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="LP2-GuiViewer2122-p3-1.0.2 (2)" level="project" />
   </component>
 </module>

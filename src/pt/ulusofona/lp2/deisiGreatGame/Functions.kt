@@ -17,6 +17,7 @@ fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
 }
 // t
 // reste do commit e update
+// NOIVO
 
 
 
