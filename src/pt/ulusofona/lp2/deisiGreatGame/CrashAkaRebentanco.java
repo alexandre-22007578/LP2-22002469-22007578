@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import java.util.ArrayList;
 
 public class CrashAkaRebentanco extends AbismoOrFerramenta{// O programador volta à primeira casa do jogo.
+
     public CrashAkaRebentanco(int id) {
         super(id);
         titulo="Crash (aka Rebentanço)";

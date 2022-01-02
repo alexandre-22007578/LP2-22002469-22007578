@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import java.util.ArrayList;
 
 public class SegmentationFault extends AbismoOrFerramenta {
+
     //Este Abismo apenas é activado caso existam dois ou mais programadores na mesma casa.
     //Todos os jogadores nessa casa recuam 3 casas.Caso apenas esteja um programador neste Abismo, então não existe nenhum efeito a aplicar.
     public SegmentationFault(int id) {

@@ -12,6 +12,7 @@ public class GameManager {
     private ArrayList<Programmer> players = new ArrayList<>();
     private HashMap<Integer, AbismoOrFerramenta> abismosEFerramentas = new HashMap<>();
     private HashMap<Integer, Integer> casasPisadas = new HashMap<>();
+    private HashMap<String, Integer> abismosPisadas = new HashMap<>();
 
     public HashMap<Integer, Integer> getCasasPisadas() {
         return casasPisadas;
@@ -20,6 +21,9 @@ public class GameManager {
     public GameManager() {
     }
 
+    public HashMap<String, Integer> getAbismosPisadas() {
+        return abismosPisadas;
+    }
 
     public HashMap<Integer, AbismoOrFerramenta> getAbismosEFerramentas() {
         return abismosEFerramentas;
@@ -58,13 +62,15 @@ public class GameManager {
 
     public void createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
 
-         createInitialBoard(playerInfo,worldSize,null);
+        createInitialBoard(playerInfo, worldSize, null);
 
     }
 
     public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
 
         abismosEFerramentas.clear();
+        casasPisadas.clear();
+        abismosPisadas.clear();
         int abismoOrFerramenta;
         int id;
         int posicao;
@@ -259,10 +265,10 @@ public class GameManager {
 
     }
 
-
     public boolean moveCurrentPlayer(int nrSpaces) {
         int nrPisadelas;
         dado = nrSpaces;
+
         if (nrSpaces < 1 || nrSpaces > 6) {
             return false;
         }
@@ -273,17 +279,33 @@ public class GameManager {
             }
         }
 
-       if (casasPisadas.containsKey(players.get(playerAtual).getPosicao())){
-          nrPisadelas= casasPisadas.get(players.get(playerAtual).getPosicao());
 
-           casasPisadas.put(players.get(playerAtual).getPosicao(),nrPisadelas+1);
-       }else {
-           casasPisadas.put(players.get(playerAtual).getPosicao(),1);
-       }
+
 
         players.get(playerAtual).mover(nrSpaces, tamanhoTabuleiro);
 
+        // casas pisadas
+        if (casasPisadas.containsKey(players.get(playerAtual).getPosicao())) {
+            nrPisadelas = casasPisadas.get(players.get(playerAtual).getPosicao())+1;
 
+            casasPisadas.put(players.get(playerAtual).getPosicao(), nrPisadelas );
+        } else {
+            casasPisadas.put(players.get(playerAtual).getPosicao(), 1);
+        }
+
+
+        // abismos pissadas
+        if (abismosEFerramentas.containsKey(players.get(playerAtual).getPosicao())) { // nesta posição existe um abismo ou ferramenta
+            if (!abismosEFerramentas.get(players.get(playerAtual).getPosicao()).souFerramenta()) { // apenas abismos
+                String titulo = abismosEFerramentas.get(players.get(playerAtual).getPosicao()).getTitulo();
+                if (abismosPisadas.containsKey(titulo)) {
+                    int pisadas = abismosPisadas.get(titulo) + 1;
+                    abismosPisadas.put(titulo, pisadas);
+                } else {
+                    abismosPisadas.put(titulo, 1);
+                }
+            }
+        }
         return true;
     }
 
