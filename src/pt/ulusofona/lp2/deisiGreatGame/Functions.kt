@@ -5,7 +5,7 @@ enum class CommandType { GET, POST }
 fun router(): (CommandType) -> ((GameManager, List<String>) -> String?)? {
     return ::getCommand
 }
-
+//mesmo compiller
 
 fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
     if (type == CommandType.GET) {
