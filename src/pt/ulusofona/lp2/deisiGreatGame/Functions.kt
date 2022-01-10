@@ -5,7 +5,7 @@ enum class CommandType { GET, POST }
 fun router(): (CommandType) -> ((GameManager, List<String>) -> String?)? {
     return ::getCommand
 }
-//mesmo compiller
+
 
 fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
     if (type == CommandType.GET) {
@@ -16,15 +16,13 @@ fun getCommand(type: CommandType): ((GameManager, List<String>) -> String?)? {
     return null
 }
 
-// t
-// reste do commit e update
-// NOIVO
 
 fun postters(gameManager: GameManager, list: List<String>): String? {
-    return when (list[0]) {
-        "ola" -> return "ola"
 
-        else -> return null
+    return when (list[0]) {
+        "ABYSS" -> abyss(gameManager, list)
+        "MOVE" -> move(gameManager, list)
+        else -> null
 
     }
 }
@@ -66,7 +64,7 @@ fun playerFirstName(gameManager: GameManager, list: List<String>): String {
 fun playerByLanguage(gameManager: GameManager, list: List<String>): String {
     val jogadores = gameManager.getProgrammers(true)
     val linguagem = list[1]
-    return jogadores.filter { it.linguagensList.contains(linguagem) }.joinToString (","){it.name}
+    return jogadores.filter { it.linguagensList.contains(linguagem) }.joinToString(",") { it.name }
 
 }
 
@@ -86,6 +84,27 @@ fun mostUsedPositions(gameManager: GameManager, list: List<String>): String {
 
     resultado = ola.take(list[1].toInt()).joinToString("\n") { "" + it.first + ":" + it.second }
     return resultado
+}
+
+fun move(gameManager: GameManager, list: List<String>): String {
+    val mover = list[1]
+
+    gameManager.moveCurrentPlayer(mover.toInt())
+    return gameManager.reactToAbyssOrTool() ?: "OK"
+
+}
+
+fun abyss(gameManager: GameManager, list: List<String>): String {
+    val id = list[1]
+    val posicao = list[2]
+    return if (gameManager.abismosEFerramentas.contains(posicao.toInt())) {
+        "Position is occupied"
+    }else{
+        gameManager.createAbismoEAdiciona(id.toInt(),posicao.toInt())
+        "OK"
+    }
+
+
 }
 
 
