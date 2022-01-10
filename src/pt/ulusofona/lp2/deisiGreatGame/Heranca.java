@@ -2,11 +2,13 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 
-public class Heranca extends AbismoOrFerramenta{// Evita os efeitos de: duplicação de código
+public class Heranca extends AbismoOrFerramenta {// Evita os efeitos de: duplicação de código
+
     public Heranca(int id) {
         super(id);
-        titulo="Herança";
+        titulo = "Herança";
     }
+
 
     @Override
     public String reactToAbyssOrTool(boolean levouCounter) {
@@ -16,7 +18,7 @@ public class Heranca extends AbismoOrFerramenta{// Evita os efeitos de: duplica�
 
     @Override
     public String move(int dado, Programmer player, int tamanhoTabuleiro, boolean levouCounter, ArrayList<Programmer> players) {
-       return reactToAbyssOrTool(levouCounter);
+        return reactToAbyssOrTool(levouCounter);
     }
 
 

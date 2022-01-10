@@ -457,14 +457,14 @@ public class GameManager {
             print.println(playerAtual);
             print.println(numeroTotalDeTurnos);
             print.println(dado);
-            String titulo;// abismo ou Ferrammenta
+            boolean souFerramenta;// abismo ou Ferrammenta
             int id;
 
             for (int posicao = 0; posicao < tamanhoTabuleiro; posicao++) {
                 if (abismosEFerramentas.containsKey(posicao)) {
-                    titulo = abismosEFerramentas.get(posicao).getTitulo();
+                    souFerramenta = abismosEFerramentas.get(posicao).souFerramenta();
                     id = abismosEFerramentas.get(posicao).getId();
-                    print.println(posicao + ":" + id + ":" + titulo);
+                    print.println(posicao + ":" + id + ":" + souFerramenta);
                 }
             }
 
@@ -479,29 +479,38 @@ public class GameManager {
 
 
             for (Programmer player : players) {
-                StringBuilder ferramentas=new StringBuilder();
+                StringBuilder ferramentas = new StringBuilder();
+                StringBuilder linguagens = new StringBuilder();
                 id = player.getId();
                 nome = player.getNome();
                 cor = player.getColor();
                 estado = player.getEstado();
                 posicao = player.getPosicao();
-                if (player.getFerramentas()==null||player.getFerramentas().size()==0){
+                if (player.getFerramentas() == null || player.getFerramentas().size() == 0) {
                     ferramentas.append("NOTOOLS");
                 }
-                for (int i=0;i<player.getFerramentas().size();i++){
-                 System.out.println(ferramentas);
-                 if (i==0){
+                for (int i = 0; i < player.getFerramentas().size(); i++) {
+                    if (i == 0) {
 
-                     ferramentas.append(player.getFerramentas().get(i));
-                 }else{
-                     ferramentas.append("@").append(player.getFerramentas().get(i));
-                 }
+                        ferramentas.append(player.getFerramentas().get(i).getId());
+                    } else {
+                        ferramentas.append("@").append(player.getFerramentas().get(i).getId());
+                    }
 
-             }
+                }
+                for (int i = 0; i < player.getLinguagensList().size(); i++) {
+                    if (i == 0) {
+
+                        linguagens.append(player.getLinguagensList().get(i));
+                    } else {
+                        linguagens.append(";").append(player.getLinguagensList().get(i));
+                    }
+
+                }
                 stuck = player.getStuck();
                 posicaoAnterior = player.getPosicaoAnterior();
                 posicao2Anterior = player.getPosicao2Anterior();
-                print.println(id + ":" + nome + ":" + cor + ":" + estado + ":" + posicao + ":" + ferramentas + ":" + stuck + ":" + posicaoAnterior + ":" + posicao2Anterior);
+                print.println(id + ":" + nome + ":" + cor + ":" + estado + ":" + posicao + ":" + ferramentas + ":" + stuck + ":" + posicaoAnterior + ":" + posicao2Anterior + ":" + linguagens);
             }
             writer.close();
 
@@ -517,9 +526,68 @@ public class GameManager {
 
         try {
 
+
+            abismosEFerramentas.clear();
+            players.clear();
+
             FileReader reader = new FileReader(file);
             BufferedReader buffered = new BufferedReader(reader);
+            int numeroLinha = 0;
 
+            String linha;
+
+            while ((linha = buffered.readLine()) != null) {
+
+                //partir a linha no caractere separador
+                String[] dados = linha.split(":");
+
+                switch (numeroLinha) {
+                    case 0 -> tamanhoTabuleiro = Integer.parseInt(dados[0]);
+                    case 1 -> playerAtual = Integer.parseInt(dados[0]);
+                    case 2 -> numeroTotalDeTurnos = Integer.parseInt(dados[0]);
+                    case 3 -> dado = Integer.parseInt(dados[0]);
+                }
+                numeroLinha++;
+
+                if (dados.length == 3) { //feramentas e abismos tabuleiro
+                    int id = Integer.parseInt(dados[1]);
+                    int posicao = Integer.parseInt(dados[0]);
+                    if (!Boolean.parseBoolean(dados[2])) {
+                        createAbismoEAdiciona(id, posicao);
+                    } else {
+                        createFerramentaEAdiciona(id, posicao);
+                    }
+                }
+                if (dados.length == 10) {
+                    int id = Integer.parseInt(dados[0]);
+                    String nome = dados[1];
+
+                    ProgrammerColor cor = switch (dados[2]) {
+                        case "PURPLE" -> ProgrammerColor.PURPLE;
+                        case "GREEN" -> ProgrammerColor.GREEN;
+                        case "BROWN" -> ProgrammerColor.BROWN;
+                        case "BLUE" -> ProgrammerColor.BLUE;
+                        default -> null;
+                    };
+
+                    String estado = dados[3];
+                    int posicao = Integer.parseInt(dados[4]);
+
+                    // fazer ferramentas
+
+                    String[] ferramentas = dados[5].split("@");
+
+                    boolean stuck = Boolean.parseBoolean(dados[6]);
+                    int posicaoAnterior = Integer.parseInt(dados[7]);
+                    int posicao2Anterior = Integer.parseInt(dados[8]);
+                    String linguagens = dados[9];
+                    Programmer programmer = new Programmer(id, nome, cor, estado, posicao, ferramentas, stuck, posicaoAnterior, posicao2Anterior, linguagens);
+                    players.add(programmer);
+                }
+
+            }
+
+            buffered.close();
         } catch (Exception e) {
             return false;
         }

@@ -2,11 +2,13 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 
-public class AjudaDoProfessor extends AbismoOrFerramenta{// Evita os efeitos de:Erro de Sintaxe,Erro de Lógica, Exception, File Not Found Exception
+public class AjudaDoProfessor extends AbismoOrFerramenta {// Evita os efeitos de:Erro de Sintaxe,Erro de Lógica, Exception, File Not Found Exception
+
     public AjudaDoProfessor(int id) {
         super(id);
-        titulo="Ajuda Do Professor";
+        titulo = "Ajuda Do Professor";
     }
+
 
     @Override
     public String reactToAbyssOrTool(boolean levouCounter) {

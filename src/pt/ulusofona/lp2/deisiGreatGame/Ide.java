@@ -2,11 +2,13 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 
-public class Ide extends AbismoOrFerramenta{// Evita os efeitos de:Erro de Sintaxe
+public class Ide extends AbismoOrFerramenta {// Evita os efeitos de:Erro de Sintaxe
+
     public Ide(int id) {
         super(id);
-        titulo="IDE";
+        titulo = "IDE";
     }
+
 
     @Override
     public String reactToAbyssOrTool(boolean levouCounter) {

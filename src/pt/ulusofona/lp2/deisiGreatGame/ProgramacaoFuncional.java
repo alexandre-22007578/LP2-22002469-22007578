@@ -9,6 +9,7 @@ public class ProgramacaoFuncional extends AbismoOrFerramenta { // duplicade code
         titulo = "Programação Funcional";
     }
 
+
     @Override
     public String reactToAbyssOrTool(boolean levouCounter) {
 

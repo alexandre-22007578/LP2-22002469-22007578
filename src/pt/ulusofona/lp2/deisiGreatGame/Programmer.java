@@ -15,6 +15,7 @@ public class Programmer {
     private boolean stuck = false;
     private int posicaoAnterior = 1;
     private int posicao2Anterior = 1;
+    private ArrayList<String> linguagensList;
 
     public String getNome() {
         return nome;
@@ -24,7 +25,36 @@ public class Programmer {
         return linguagensList;
     }
 
-    private ArrayList<String> linguagensList;
+
+    public Programmer(int id, String nome, ProgrammerColor cor, String estado, int posicao, String[] ferramentas, boolean stuck, int posicaoAnterior, int posicao2Anterior, String linguagensFavoritas) {
+        this.id = id;
+        this.nome = nome;
+        this.cor = cor;
+        this.estado = estado;
+        this.posicao = posicao;
+        this.stuck = stuck;
+        this.posicaoAnterior = posicaoAnterior;
+        this.posicao2Anterior = posicao2Anterior;
+        this.linguagensList = new ArrayList<>(Arrays.asList(linguagensFavoritas.split(";")));
+        int idFerramentas;
+        for (String ferramenta : ferramentas) {
+            if (ferramenta.equals("NOTOOLS")){
+                break;
+            }
+            idFerramentas = Integer.parseInt(ferramenta);
+            switch (idFerramentas) {
+                case 0 -> this.ferramentas.add(new Heranca(idFerramentas));
+                case 1 -> this.ferramentas.add(new ProgramacaoFuncional(idFerramentas));
+                case 2 -> this.ferramentas.add(new TstUnitarios(idFerramentas));
+                case 3 -> this.ferramentas.add(new TratamentoDeExcepcoes(idFerramentas));
+                case 4 -> this.ferramentas.add(new Ide(idFerramentas));
+                case 5 -> this.ferramentas.add(new AjudaDoProfessor(idFerramentas));
+
+            }
+        }
+
+
+    }
 
     public Programmer(int id, String nome, ProgrammerColor cor, String linguagensFavoritas) {
         this.id = id;
