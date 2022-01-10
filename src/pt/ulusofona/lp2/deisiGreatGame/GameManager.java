@@ -453,6 +453,58 @@ public class GameManager {
             FileWriter writer = new FileWriter(file);
             PrintWriter print = new PrintWriter(writer);
 
+            print.println(tamanhoTabuleiro);
+            print.println(playerAtual);
+            print.println(numeroTotalDeTurnos);
+            print.println(dado);
+            String titulo;// abismo ou Ferrammenta
+            int id;
+
+            for (int posicao = 0; posicao < tamanhoTabuleiro; posicao++) {
+                if (abismosEFerramentas.containsKey(posicao)) {
+                    titulo = abismosEFerramentas.get(posicao).getTitulo();
+                    id = abismosEFerramentas.get(posicao).getId();
+                    print.println(posicao + ":" + id + ":" + titulo);
+                }
+            }
+
+            String nome;
+            ProgrammerColor cor;
+            String estado;
+            int posicao;
+
+            boolean stuck;
+            int posicaoAnterior;
+            int posicao2Anterior;
+
+
+            for (Programmer player : players) {
+                StringBuilder ferramentas=new StringBuilder();
+                id = player.getId();
+                nome = player.getNome();
+                cor = player.getColor();
+                estado = player.getEstado();
+                posicao = player.getPosicao();
+                if (player.getFerramentas()==null||player.getFerramentas().size()==0){
+                    ferramentas.append("NOTOOLS");
+                }
+                for (int i=0;i<player.getFerramentas().size();i++){
+                 System.out.println(ferramentas);
+                 if (i==0){
+
+                     ferramentas.append(player.getFerramentas().get(i));
+                 }else{
+                     ferramentas.append("@").append(player.getFerramentas().get(i));
+                 }
+
+             }
+                stuck = player.getStuck();
+                posicaoAnterior = player.getPosicaoAnterior();
+                posicao2Anterior = player.getPosicao2Anterior();
+                print.println(id + ":" + nome + ":" + cor + ":" + estado + ":" + posicao + ":" + ferramentas + ":" + stuck + ":" + posicaoAnterior + ":" + posicao2Anterior);
+            }
+            writer.close();
+
         } catch (Exception e) {
             return false;
         }

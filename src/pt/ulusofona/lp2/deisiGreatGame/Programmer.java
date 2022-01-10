@@ -11,7 +11,6 @@ public class Programmer {
     private ProgrammerColor cor;
     private String estado = "Em Jogo";
     private int posicao = 1;
-    private String linguagensFavoritas;
     private ArrayList<AbismoOrFerramenta> ferramentas = new ArrayList<>();
     private boolean stuck = false;
     private int posicaoAnterior = 1;
@@ -31,7 +30,6 @@ public class Programmer {
         this.id = id;
         this.nome = nome;
         this.cor = cor;
-        this.linguagensFavoritas = linguagensFavoritas;
         this.linguagensList = new ArrayList<>(Arrays.asList(linguagensFavoritas.split(";")));
     }
 
